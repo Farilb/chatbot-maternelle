@@ -1,0 +1,197 @@
+{
+  "intents": [
+    {
+      "tag": "forum_questions_courantes",
+      "patterns": [
+        "tiraillements bas ventre normal",
+        "pertes blanches grossesse", 
+        "brûlures estomac femme enceinte",
+        "envie fréquente uriner normal",
+        "gorge sèche grossesse",
+        "rêves bizarres grossesse",
+        "nez bouché femme enceinte",
+        "jambes sans repos grossesse",
+        "bas ventre qui pulse"
+      ],
+      "responses": [
+        "SYMPTÔMES COURANTS (souvent normaux) :\n• Tiraillements : ligaments qui s'étirent\n• Pertes blanches : hormonales, consulter si odeur/démangeaisons\n• Brûlures estomac : reflux, repas légers\n• Rêves étranges : hormonaux + anxiété\n⚠️ TOUJOURS : Signaler tout symptôme gênant à votre professionnel de santé"
+      ]
+    },
+    {
+      "tag": "inquietudes_frequentes",
+      "patterns": [
+        "bébé ne bouge pas beaucoup",
+        "bébé bouge trop",
+        "ventre petit grossesse",
+        "ventre gros grossesse",
+        "pas encore senti bébé bouger",
+        "mouvements bébé diminuent",
+        "bébé position siège",
+        "col utérin court risques"
+      ],
+      "responses": [
+        "INQUIÉTUDES FRÉQUENTES :\n👶 MOUVEMENTS : Variables, compter à partir de 28 SA (10 mouvements/2h)\n🤰 TAILLE VENTRE : Très variable selon morphologie, position bébé\n🔄 POSITION : Bébé se retourne souvent jusqu'au 8ème mois\n⚠️ CONSULTER SI : Diminution soudaine mouvements, douleurs, saignements\n💬 CONSEIL : Notez vos questions pour la prochaine consultation"
+      ]
+    },
+    {
+      "tag": "valise_maternite",
+      "patterns": [
+        "quoi mettre valise maternité",
+        "valise accouchement quand préparer",
+        "liste affaires maternité",
+        "valise bébé maternité",
+        "valise papa accouchement",
+        "documents maternité",
+        "quand préparer valise grossesse",
+        "checklist valise maternité"
+      ],
+      "responses": [
+        "VALISE MATERNITÉ :\n⏰ QUAND : À partir de 8 mois\n👩 POUR MAMAN : 2-3 nuits de vêtements confortables, produits toilette, soutiens-gorge allaitement, affaires retour\n👶 POUR BÉBÉ : Bodies, pyjamas, couches, brassières\n📄 DOCUMENTS : Carte vitale, pièce identité, carte groupe sanguin, dossier médical\n💡 CONSEIL : Une valise à la maison, une au coffre voiture"
+      ]
+    },
+    {
+      "tag": "chambre_bebe_preparation",
+      "patterns": [
+        "quand préparer chambre bébé",
+        "liste naissance essentiel",
+        "lit bébé sécurité normes",
+        "matériel puériculture indispensable",
+        "chambre bébé aménagement",
+        "couffin ou lit cododo",
+        "table à langer nécessaire",
+        "poussette choisir"
+      ],
+      "responses": [
+        "CHAMBRE BÉBÉ :\n🏠 QUAND : Commencer vers 7 mois\n🛏️ LIT : Normes NF, barreaux <6.5cm, matelas ferme\n🚼 INDISPENSABLE : Couches, bodies, produits toilette, thermomètre\n👶 MATÉRIEL : Poussette, siège auto, table à langer optionnelle\n💡 CONSEIL : Liste de naissance pour éviter doublons, privilégier occasion pour certains articles"
+      ]
+    },
+    {
+      "tag": "vie_intime_grossesse",
+      "patterns": [
+        "rapports sexuels grossesse sécurité",
+        "positions sexuelles femme enceinte",
+        "désir sexuel grossesse",
+        "orgasme déclenche accouchement",
+        "saignements après rapports grossesse",
+        "trimestre rapports intimes",
+        "contractions après rapports",
+        "libido grossesse variations"
+      ],
+      "responses": [
+        "VIE INTIME :\n❤️ RAPPORTS : Généralement sans danger sauf contre-indication médicale\n🛏️ POSITIONS : Côté, femme dessus, plus confortables\n📈 LIBIDO : Variable (↑ 2ème trimestre, ↓ 1er et 3ème)\n⚠️ ORGASME : Ne déclenche pas accouchement (sauf terme dépassé)\n🚨 CONSULTER : Si saignements, douleurs, pertes inhabituelles"
+      ]
+    },
+    {
+      "tag": "emotions_grossesse",
+      "patterns": [
+        "baby blues grossesse",
+        "émotions femme enceinte",
+        "pleurs grossesse normaux",
+        "stress grossesse effets bébé",
+        "anxiété grossesse",
+        "sautes humeur grossesse",
+        "dépression grossesse",
+        "bien-être mental grossesse"
+      ],
+      "responses": [
+        "ÉMOTIONS :\n😢 NORMAL : Sautes d'humeur, sensibilité, anxiété légère\n💙 BABY BLUES : Fréquent après accouchement, temporaire\n⚠️ DÉPRESSION : Si tristesse persistante, perte intérêt → consulter\n🧘 CONSEILS : Parler, repos, relaxation, groupes parole\n👩‍⚕️ AIDE : Sage-femme, psychologue périnatal, soutien proches"
+      ]
+    },
+    {
+      "tag": "medicaments_grossesse",
+      "patterns": [
+        "paracétamol grossesse autorisé",
+        "doliprane femme enceinte",
+        "médicaments interdits grossesse",
+        "rhume grossesse traitement",
+        "maux tête femme enceinte",
+        "antibiotiques grossesse",
+        "automédication grossesse danger",
+        "ordonnance femme enceinte"
+      ],
+      "responses": [
+        "MÉDICAMENTS :\n✅ AUTORISÉ SUR AVIS MÉDICAL : Paracétamol (Doliprane)\n❌ DANGEREUX : Anti-inflammatoires, certains antibiotiques, dérivés vitamine A\n⚠️ PRINCIPE : JAMAIS d'automédication ! Toujours consulter avant prise\n💡 CONSEIL : Liste des médicaments autorisés chez votre médecin/pharmacien"
+      ]
+    },
+    {
+      "tag": "beaute_soins_grossesse",
+      "patterns": [
+        "teinture cheveux femme enceinte",
+        "soins visage grossesse",
+        "épilation grossesse",
+        "crèmes vergetures efficaces",
+        "maquillage femme enceinte",
+        "produits beauté interdits grossesse",
+        "soins corps grossesse",
+        "rétinol grossesse danger"
+      ],
+      "responses": [
+        "BEAUTÉ & SOINS :\n💇 TINTURE : Préférer après 1er trimestre, produits sans ammoniaque\n🧴 CRÈMES : Éviter rétinol, acide salicylique. Hydratation quotidienne pour vergetures\n💅 ÉPILATION : Cire et laser déconseillés (douleur, sensibilité)\n💄 MAQUILLAGE : Pas de restriction majeure\n👩‍⚕️ CONSEIL : Privilégier produits bio/naturels, test cutané"
+      ]
+    },
+    {
+      "tag": "travail_gestes_grossesse",
+      "patterns": [
+        "position assise femme enceinte",
+        "porter charges grossesse",
+        "travail bureau grossesse",
+        "gestes quotidiens grossesse",
+        "ménage femme enceinte",
+        "position couchée grossesse",
+        "repos femme enceinte",
+        "travail physique grossesse"
+      ],
+      "responses": [
+        "GESTES QUOTIDIENS :\n💺 POSITION : Dos droit, repose-pieds, changer souvent de position\n📦 PORT DE CHARGES : Maximum 5kg, plier genoux (pas le dos)\n🧹 MÉNAGE : Éviter produits toxiques, demander aide si fatigue\n🛌 SOMMEIL : Côté gauche idéal, oreiller entre les jambes\n💼 TRAVAIL : Aménagement possible, signaler grossesse à l'employeur"
+      ]
+    },
+    {
+      "tag": "trimestre1_conseils",
+      "patterns": [
+        "conseils premier trimestre",
+        "que faire 3 premiers mois grossesse",
+        "premier trimestre précautions",
+        "début grossesse quoi faire",
+        "semaines 1 à 13 conseils",
+        "premier trimestre interdits",
+        "début grossesse alimentation",
+        "premier trimestre examen médicaux"
+      ],
+      "responses": [
+        "PREMIER TRIMESTRE (semaines 1-13) :\n✅ FAIRE : 1ère consultation avant 12 SA, prise d'acide folique, alimentation équilibrée, repos\n✅ EXAMENS : Prise de sang, 1ère échographie à 12 SA, dépistage trisomie 21\n❌ ÉVITER : Tabac, alcool, médicaments non prescrits, sports violents\n⚠️ SYMPTÔMES COURANTS : Nausées, fatigue, seins sensibles - normaux !"
+      ]
+    },
+    {
+      "tag": "trimestre2_conseils",
+      "patterns": [
+        "deuxième trimestre conseils",
+        "semaines 14 à 27 quoi faire",
+        "trimestre 2 grossesse",
+        "milieu grossesse conseils",
+        "quatrième mois grossesse",
+        "trimestre 2 activités",
+        "écho morphologique quand",
+        "bébé bouge trimestre 2"
+      ],
+      "responses": [
+        "DEUXIÈME TRIMESTRE (semaines 14-27) :\n✅ FAIRE : Échographie morphologique à 22 SA, déclaration de grossesse, préparation naissance, activité physique douce\n✅ PROFITER : Période souvent plus confortable, premiers mouvements de bébé !\n❌ ATTENTION : Surveiller prise de poids, diabète gestationnel dépistage\n💡 CONSEIL : Commencer à penser à la valise maternité et à la chambre bébé"
+      ]
+    },
+    {
+      "tag": "trimestre3_conseils",
+      "patterns": [
+        "troisième trimestre conseils",
+        "dernier trimestre grossesse",
+        "semaines 28 à 40 quoi faire",
+        "fin grossesse préparations",
+        "trimestre 3 précautions",
+        "derniers mois grossesse",
+        "préparation accouchement trimestre 3",
+        "signes accouchement proche"
+      ],
+      "responses": [
+        "TROISIÈME TRIMESTRE (semaines 28-40) :\n✅ FAIRE : Préparation à l'accouchement, valise maternité prête, repos, surveillance mouvements bébé\n✅ EXAMENS : 3ème échographie à 32 SA, monitoring si nécessaire\n❌ ÉVITER : Longs trajets, ports de charges lourdes, stress\n🚨 URGENCES : Contractions régulières, perte des eaux, saignements → Maternité !"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{% extends "layout.html" %}
+
+{% block title %}Urgences - Maman & Bébé{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Bannière d'urgence -->
+    <div class="alert alert-danger text-center">
+        <h1 class="alert-heading">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            URGENCES MÉDICALES
+        </h1>
+        <p class="mb-0 lead">
+            Composez le <strong>15</strong> (SAMU) ou le <strong>112</strong> (urgence européenne) immédiatement
+        </p>
+    </div>
+
+    <div class="row">
+        <!-- Urgences Grossesse -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-danger h-100">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-baby-carriage me-2"></i>
+                        Urgences Grossesse
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-tint text-danger me-2"></i>
+                            <strong>Saignements</strong> abondants ou avec caillots
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-wave-square text-danger me-2"></i>
+                            <strong>Contractions</strong> régulières et douloureuses avant terme
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-water text-danger me-2"></i>
+                            <strong>Perte de liquide</strong> amniotique (écoulement continu)
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-ban text-danger me-2"></i>
+                            <strong>Absence de mouvements</strong> du bébé pendant plus de 12h
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-head-side-virus text-danger me-2"></i>
+                            <strong>Maux de tête</strong> intenses avec troubles visuels
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-lungs text-danger me-2"></i>
+                            <strong>Difficultés respiratoires</strong> ou essoufflement important
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-temperature-high text-danger me-2"></i>
+                            <strong>Fièvre</strong> élevée (>38.5°C) persistante
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-bolt text-danger me-2"></i>
+                            <strong>Douleurs abdominales</strong> intenses et continues
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Urgences Bébé/Nourrisson -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-warning h-100">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-baby me-2"></i>
+                        Urgences Bébé/Nourrisson
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fas fa-temperature-high text-warning me-2"></i>
+                            <strong>Fièvre</strong> >38°C si < 3 mois ou >40°C
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-wind text-warning me-2"></i>
+                            <strong>Difficultés respiratoires</strong> ou bleuissement
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-ban text-warning me-2"></i>
+                            <strong>Refus</strong> de s'alimenter ou de boire
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-tint text-warning me-2"></i>
+                            <strong>Vomissements</strong> en jet ou répétés
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-poop text-warning me-2"></i>
+                            <strong>Selles</strong> avec sang ou glaires
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-bed text-warning me-2"></i>
+                            <strong>Somnolence</strong> anormale, difficulté à réveiller
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-cry text-warning me-2"></i>
+                            <strong>Pleurs</strong> inhabituels, aigus ou continus
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fas fa-skull text-warning me-2"></i>
+                            <strong>Raideur</strong> de la nuque ou convulsions
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Que faire en attendant les secours -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-info">
+                <div class="card-header bg-info text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-first-aid me-2"></i>
+                        Que faire en attendant les secours ?
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>📞 Au téléphone avec le 15 :</h6>
+                            <ul>
+                                <li>Restez calme et parlez distinctement</li>
+                                <li>Donnez votre nom et numéro de téléphone</li>
+                                <li>Précisez votre adresse exacte</li>
+                                <li>Décrivez les symptômes et leur heure de début</li>
+                                <li>Indiquez si vous êtes enceinte et depuis combien de temps</li>
+                                <li>Ne raccrochez pas avant qu'on vous le dise</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🆘 En attendant les secours :</h6>
+                            <ul>
+                                <li>Allongez-vous sur le côté gauche (si enceinte)</li>
+                                <li>Ne donnez ni à manger ni à boire</li>
+                                <li>Ne prenez aucun médicament</li>
+                                <li>Préparez vos papiers (carte vitale, carnets de santé)</li>
+                                <li>Ouvrez la porte d'entrée si vous êtes seul(e)</li>
+                                <li>Gardez votre téléphone à portée de main</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts importants -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-secondary">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="card-title mb-0">
+                        <i class="fas fa-address-book me-2"></i>
+                        Contacts Importants
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-ambulance fa-2x text-danger mb-2"></i>
+                                <h5>SAMU</h5>
+                                <p class="mb-1"><strong>15</strong></p>
+                                <small class="text-muted">Urgences médicales</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-globe-europe fa-2x text-primary mb-2"></i>
+                                <h5>Urgence Européenne</h5>
+                                <p class="mb-1"><strong>112</strong></p>
+                                <small class="text-muted">Toute l'Europe</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-fire-extinguisher fa-2x text-warning mb-2"></i>
+                                <h5>Pompiers</h5>
+                                <p class="mb-1"><strong>18</strong></p>
+                                <small class="text-muted">Accidents, secours</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <div class="p-3 border rounded">
+                                <i class="fas fa-shield-alt fa-2x text-dark mb-2"></i>
+                                <h5>Police/Secours</h5>
+                                <p class="mb-1"><strong>17</strong></p>
+                                <small class="text-muted">Sécurité, danger immédiat</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rappel important -->
+    <div class="alert alert-warning mt-4 text-center">
+        <h6 class="alert-heading">
+            <i class="fas fa-info-circle me-2"></i>
+            Rappel Important
+        </h6>
+        <p class="mb-0">
+            Ce chatbot fournit des informations générales et <strong>ne remplace pas une consultation médicale</strong>.
+            En cas de doute ou de symptômes inquiétants, contactez toujours un professionnel de santé.
+        </p>
+    </div>
+</div>
+{% endblock %}

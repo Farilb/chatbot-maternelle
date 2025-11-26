@@ -1,0 +1,134 @@
+{% extends "layout.html" %}
+
+{% block title %}Assistant - Maman & Bébé{% endblock %}
+
+{% block extra_css %}
+<link href="{{ url_for('static', filename='css/chat.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <!-- Sidebar avec historique -->
+        <div class="col-md-3 bg-light border-end p-0 d-none d-md-block">
+            <div class="sidebar-header p-3 border-bottom">
+                <h5 class="mb-0">
+                    <i class="fas fa-history me-2"></i>Historique
+                </h5>
+            </div>
+            <div class="consultations-list" id="consultationsList">
+                {% for consult in consultations %}
+                <div class="consultation-item p-3 border-bottom">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <small class="text-muted">
+                            <!-- CORRECTION : Gestion des dates depuis MongoDB -->
+                            {% if consult.date_consultation is string %}
+                                {{ consult.date_consultation[:16]|replace('T', ' ') }}
+                            {% else %}
+                                {{ consult.date_consultation.strftime('%d/%m %H:%M') }}
+                            {% endif %}
+                        </small>
+                        <span class="badge bg-{{ 'danger' if consult.urgency == 'high' else 'warning' if consult.urgency == 'medium' else 'info' }}">
+                            {{ consult.urgency }}
+                        </span>
+                    </div>
+                    <p class="mb-1 small text-truncate">{{ consult.question }}</p>
+                </div>
+                {% else %}
+                <div class="text-center p-4 text-muted">
+                    <i class="fas fa-inbox fa-2x mb-2"></i>
+                    <p>Aucune conversation</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Zone de chat principale -->
+        <div class="col-md-9 d-flex flex-column" style="height: 80vh;">
+            <!-- En-tête du chat -->
+            <div class="chat-header p-3 border-bottom">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">
+                            <i class="fas fa-robot text-primary me-2"></i>
+                            Assistant Santé Maternelle
+                        </h4>
+                        <small class="text-muted">En ligne • Basé sur vos besoins</small>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" 
+                                type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" id="clearChat">
+                                <i class="fas fa-trash me-2"></i>Effacer la conversation
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard') }}">
+                                <i class="fas fa-chart-line me-2"></i>Tableau de bord
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="chat-messages flex-grow-1 p-3" id="chatMessages">
+                <!-- Message de bienvenue -->
+                <div class="message bot-message mb-3">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <p class="mb-1">Bonjour ! 👋 Je suis votre assistant santé maternelle.</p>
+                            <p class="mb-1">Je peux vous aider avec :</p>
+                            <ul class="small mb-1">
+                                <li>Questions sur la grossesse et les symptômes</li>
+                                <li>Conseils nutrition et soins bébé</li>
+                                <li>Rappels de vaccins et visites médicales</li>
+                                <li>Informations sur l'allaitement</li>
+                            </ul>
+                            <p class="mb-0"><small>⚠️ Je ne remplace pas un avis médical professionnel.</small></p>
+                        </div>
+                        <small class="text-muted">Maintenant</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zone de saisie -->
+            <div class="chat-input p-3 border-top">
+                <form id="chatForm">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="messageInput" 
+                               placeholder="Posez votre question sur la grossesse, les soins bébé..." 
+                               autocomplete="off">
+                        <button class="btn btn-primary" type="submit" id="sendButton">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="quick-actions mt-2">
+                        <small class="text-muted me-2">Questions rapides :</small>
+                        <button type="button" class="btn btn-outline-secondary btn-sm quick-question" 
+                                data-question="Quels sont les signes d'alerte pendant la grossesse ?">
+                            Signes alerte
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm quick-question" 
+                                data-question="Calendrier des vaccins pour bébé">
+                            Vaccins bébé
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm quick-question" 
+                                data-question="Alimentation pendant la grossesse">
+                            Nutrition
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,309 @@
+{% extends "layout.html" %}
+
+{% block title %}Profil - Maman & Bébé{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Créer votre profil
+                    </h3>
+                    <p class="mb-0 mt-2 small">Personnalisez votre expérience</p>
+                </div>
+                <div class="card-body p-4">
+                    <form id="profileForm">
+                        <!-- Informations personnelles -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="fas fa-user me-2 text-primary"></i>
+                                Informations Personnelles
+                            </h5>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="prenom" class="form-label">Prénom *</label>
+                                    <input type="text" class="form-control" id="prenom" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="nom" class="form-label">Nom</label>
+                                    <input type="text" class="form-control" id="nom">
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3 mt-1">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="phone" required>
+                                    <div class="form-text">Pour les rappels importants</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <label for="date_naissance" class="form-label">Date de naissance</label>
+                                <input type="date" class="form-control" id="date_naissance">
+                            </div>
+                        </div>
+
+                        <!-- Situation actuelle -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="fas fa-baby me-2 text-success"></i>
+                                Votre Situation
+                            </h5>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Je suis :</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="statut" 
+                                           id="enceinte" value="enceinte" checked>
+                                    <label class="form-check-label" for="enceinte">
+                                        <i class="fas fa-baby-carriage me-1"></i>
+                                        Femme enceinte
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="statut" 
+                                           id="jeune_mere" value="jeune_mere">
+                                    <label class="form-check-label" for="jeune_mere">
+                                        <i class="fas fa-baby me-1"></i>
+                                        Jeune maman
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="statut" 
+                                           id="les_deux" value="les_deux">
+                                    <label class="form-check-label" for="les_deux">
+                                        <i class="fas fa-baby me-1"></i>
+                                        Enceinte et déjà maman
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Informations médicales -->
+                        <div class="mb-4">
+                            <h5 class="border-bottom pb-2">
+                                <i class="fas fa-heartbeat me-2 text-danger"></i>
+                                Informations Médicales
+                            </h5>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Groupe sanguin</label>
+                                <select class="form-select" id="groupe_sanguin">
+                                    <option value="">Non renseigné</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Allergies connues</label>
+                                <textarea class="form-control" id="allergies" rows="2" 
+                                          placeholder="Pénicilline, aspirine, aliments..."></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Traitements en cours</label>
+                                <textarea class="form-control" id="traitements" rows="2" 
+                                          placeholder="Médicaments, suppléments..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Enfants existants -->
+                        <div class="mb-4" id="childrenSection" style="display: none;">
+                            <h5 class="border-bottom pb-2">
+                                <i class="fas fa-child me-2 text-warning"></i>
+                                Vos Enfants
+                            </h5>
+                            <div id="childrenList"></div>
+                            <button type="button" class="btn btn-outline-warning btn-sm mt-2" 
+                                    onclick="addChildField()">
+                                <i class="fas fa-plus me-1"></i>Ajouter un enfant
+                            </button>
+                        </div>
+
+                        <!-- Consentement -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="consentement" required>
+                                <label class="form-check-label" for="consentement">
+                                    J'accepte que mes données soient utilisées pour personnaliser 
+                                    mon accompagnement et recevoir des rappels importants.
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="notifications">
+                                <label class="form-check-label" for="notifications">
+                                    Je souhaite recevoir des notifications et rappels par SMS.
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Boutons -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>
+                                Enregistrer mon profil
+                            </button>
+                            <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                                Plus tard
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Avertissement médical -->
+            <div class="alert alert-warning mt-4">
+                <h6><i class="fas fa-exclamation-triangle me-2"></i>Important</h6>
+                <p class="mb-0 small">
+                    Ce chatbot fournit des informations générales et ne remplace pas 
+                    une consultation médicale. En cas d'urgence, contactez le 15 ou 
+                    votre professionnel de santé.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Afficher/masquer la section enfants selon la situation
+document.querySelectorAll('input[name="statut"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const childrenSection = document.getElementById('childrenSection');
+        if (this.value === 'jeune_mere' || this.value === 'les_deux') {
+            childrenSection.style.display = 'block';
+        } else {
+            childrenSection.style.display = 'none';
+        }
+    });
+});
+
+// Gestion des champs enfants
+let childCount = 0;
+
+function addChildField() {
+    childCount++;
+    const childrenList = document.getElementById('childrenList');
+    
+    const childHtml = `
+        <div class="child-field border p-3 mb-3 rounded">
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <label class="form-label small">Prénom</label>
+                    <input type="text" class="form-control form-control-sm" 
+                           name="child_name_${childCount}" placeholder="Prénom">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small">Date de naissance</label>
+                    <input type="date" class="form-control form-control-sm" 
+                           name="child_birth_date_${childCount}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small">Sexe</label>
+                    <select class="form-select form-select-sm" name="child_gender_${childCount}">
+                        <option value="">--</option>
+                        <option value="F">Fille</option>
+                        <option value="M">Garçon</option>
+                    </select>
+                </div>
+                <div class="col-md-1 d-flex align-items-end">
+                    <button type="button" class="btn btn-outline-danger btn-sm" 
+                            onclick="this.parentElement.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    childrenList.insertAdjacentHTML('beforeend', childHtml);
+}
+
+// Soumission du formulaire
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Récupération des données enfants
+    const children = [];
+    for (let i = 1; i <= childCount; i++) {
+        const name = document.querySelector(`[name="child_name_${i}"]`);
+        const birthDate = document.querySelector(`[name="child_birth_date_${i}"]`);
+        const gender = document.querySelector(`[name="child_gender_${i}"]`);
+        
+        if (name && name.value && birthDate && birthDate.value) {
+            children.push({
+                name: name.value,
+                birth_date: birthDate.value,
+                gender: gender ? gender.value : ''
+            });
+        }
+    }
+    
+    const formData = {
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        date_naissance: document.getElementById('date_naissance').value,
+        statut: document.querySelector('input[name="statut"]:checked').value,
+        groupe_sanguin: document.getElementById('groupe_sanguin').value,
+        allergies: document.getElementById('allergies').value,
+        traitements: document.getElementById('traitements').value,
+        children: children
+    };
+    
+    // Envoi des données
+    fetch('/api/profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            window.location.href = '{{ url_for("dashboard") }}';
+        } else {
+            alert('Erreur: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Erreur lors de la création du profil');
+    });
+});
+
+// Ajouter un champ enfant initial si jeune maman
+document.addEventListener('DOMContentLoaded', function() {
+    const jeuneMereRadio = document.getElementById('jeune_mere');
+    if (jeuneMereRadio.checked) {
+        document.getElementById('childrenSection').style.display = 'block';
+        addChildField();
+    }
+    
+    const lesDeuxRadio = document.getElementById('les_deux');
+    if (lesDeuxRadio.checked) {
+        document.getElementById('childrenSection').style.display = 'block';
+        addChildField();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends "layout.html" %}
+
+{% block title %}Tableau de Bord - Maman & Bébé{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- En-tête du dashboard -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="fw-bold">
+                <i class="fas fa-chart-line me-2 text-primary"></i>
+                Tableau de Bord
+            </h1>
+            <p class="text-muted">Votre suivi santé personnalisé</p>
+        </div>
+        <div class="col-auto">
+            <a href="{{ url_for('profile_setup') }}" class="btn btn-outline-primary">
+                <i class="fas fa-edit me-1"></i>Modifier le profil
+            </a>
+        </div>
+    </div>
+
+    <!-- Alertes et Rappels -->
+    {% if vaccine_reminders %}
+    <div class="row mb-4">
+        <div class="col">
+            <div class="alert alert-warning">
+                <h5><i class="fas fa-bell me-2"></i>Rappels importants</h5>
+                <div class="mt-2">
+                    {% for reminder in vaccine_reminders %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <strong>{{ reminder.child_name }}</strong> - 
+                            {{ ', '.join(reminder.vaccines) }}
+                            <small class="text-muted ms-2">({{ reminder.milestone }})</small>
+                        </div>
+                        <span class="badge bg-{{ 'danger' if reminder.status == 'due' else 'warning' }}">
+                            {{ 'À faire' if reminder.status == 'due' else 'Prochainement' }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- Carte Grossesse -->
+        {% if pregnancy %}
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-baby me-2"></i>Suivi Grossesse
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <div class="pregnancy-progress mb-3">
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar bg-success" 
+                                     style="width: {{ (pregnancy.week_current / 40) * 100 }}%">
+                                    {{ pregnancy.week_current }}/40 semaines
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="text-success">{{ pregnancy.week_current }} SA</h3>
+                        <p class="text-muted">
+                            {{ pregnancy.trimester }}ème trimestre
+                        </p>
+                    </div>
+                    
+                    <div class="pregnancy-info">
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <small class="text-muted">Début</small>
+                                <p class="mb-0 fw-bold">
+                                    <!-- CORRECTION : Gestion des dates MongoDB -->
+                                    {% if pregnancy.start_date is string %}
+                                        {{ pregnancy.start_date[:10] }}
+                                    {% else %}
+                                        {{ pregnancy.start_date.strftime('%d/%m/%Y') }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">Terme prévu</small>
+                                <p class="mb-0 fw-bold">
+                                    <!-- CORRECTION : Gestion des dates MongoDB -->
+                                    {% if pregnancy.due_date is string %}
+                                        {{ pregnancy.due_date[:10] }}
+                                    {% else %}
+                                        {{ pregnancy.due_date.strftime('%d/%m/%Y') }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('pregnancy_tracker') }}" class="btn btn-outline-success btn-sm">
+                        <i class="fas fa-chart-line me-1"></i>Détails du suivi
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <i class="fas fa-baby-carriage fa-3x text-muted mb-3"></i>
+                    <h5>Suivi Grossesse</h5>
+                    <p class="text-muted mb-3">
+                        Ajoutez votre grossesse pour un suivi personnalisé
+                    </p>
+                    <a href="{{ url_for('pregnancy_tracker') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>Ajouter une grossesse
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Dernières Consultations -->
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-comments me-2"></i>Dernières Consultations
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if consultations %}
+                    <div class="consultations-timeline">
+                        {% for consult in consultations %}
+                        <div class="consultation-item mb-3 pb-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <small class="text-muted">
+                                    <!-- CORRECTION : Gestion des dates MongoDB -->
+                                    {% if consult.date_consultation is string %}
+                                        {{ consult.date_consultation[:16]|replace('T', ' ') }}
+                                    {% else %}
+                                        {{ consult.date_consultation.strftime('%d/%m à %H:%M') }}
+                                    {% endif %}
+                                </small>
+                                <span class="badge bg-{{ 'danger' if consult.urgency == 'high' else 'warning' if consult.urgency == 'medium' else 'info' }}">
+                                    {{ consult.urgency }}
+                                </span>
+                            </div>
+                            <p class="mb-1 fw-bold">{{ consult.question }}</p>
+                            <p class="mb-0 small text-muted">{{ consult.response[:100] }}...</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <p>Aucune consultation récente</p>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('chat') }}" class="btn btn-outline-info btn-sm">
+                        <i class="fas fa-robot me-1"></i>Nouvelle consultation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistiques Rapides -->
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-primary">{{ consultations|length }}</h3>
+                    <p class="text-muted mb-0">Consultations</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-success">
+                        {% if pregnancy %}{{ pregnancy.week_current }}{% else %}0{% endif %}
+                    </h3>
+                    <p class="text-muted mb-0">Semaines</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-warning">{{ vaccine_reminders|length }}</h3>
+                    <p class="text-muted mb-0">Rappels</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="text-info">
+                        {{ consultations|selectattr('urgency', 'equalto', 'high')|list|length }}
+                    </h3>
+                    <p class="text-muted mb-0">Alertes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

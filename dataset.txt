@@ -1,0 +1,658 @@
+{
+  "dataset_info": {
+    "nom": "Dataset Santé Maternelle et Infantile",
+    "version": "1.0.0",
+    "langue": "français",
+    "total_qa": 250,
+    "date_creation": "2024-11-14",
+    "sources": ["OMS/WHO", "UNICEF", "Ministères de la Santé", "Guides médicaux validés"],
+    "contexte": "Afrique de l'Ouest / Burkina Faso",
+    "disclaimer": "Informations à but éducatif uniquement. Consultez un professionnel de santé."
+  },
+  
+  "categories": [
+    {
+      "categorie": "grossesse_generale",
+      "description": "Questions générales sur la grossesse",
+      "total": 50,
+      "qa": [
+        {
+          "id": "G001",
+          "question": "Combien de temps dure une grossesse normale ?",
+          "reponse": "Une grossesse normale dure environ 40 semaines (280 jours) à partir du premier jour des dernières règles, soit 9 mois. Le bébé peut naître entre 37 et 42 semaines sans problème.",
+          "variations": [
+            "Durée de la grossesse",
+            "Combien de mois dure une grossesse",
+            "9 mois de grossesse"
+          ],
+          "mots_cles": ["durée", "grossesse", "mois", "semaines", "combien de temps"],
+          "intention": "grossesse_generale",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G002",
+          "question": "Quels sont les signes de grossesse ?",
+          "reponse": "Les principaux signes de grossesse sont : absence de règles, nausées matinales, seins sensibles et gonflés, fatigue excessive, envies fréquentes d'uriner, changements d'humeur. Un test de grossesse confirme la grossesse.",
+          "variations": [
+            "Comment savoir si je suis enceinte",
+            "Symptômes de grossesse",
+            "Signes qu'on est enceinte"
+          ],
+          "mots_cles": ["signes", "symptômes", "enceinte", "grossesse", "reconnaître"],
+          "intention": "grossesse_generale",
+          "source": "Guides médicaux",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G003",
+          "question": "C'est quoi le premier trimestre de grossesse ?",
+          "reponse": "Le premier trimestre va de la semaine 1 à la semaine 13. C'est la période où les organes du bébé se forment. La maman peut avoir des nausées, de la fatigue. C'est une période critique où il faut éviter l'alcool, le tabac et certains médicaments.",
+          "variations": [
+            "Premier trimestre grossesse",
+            "3 premiers mois de grossesse",
+            "Début de grossesse"
+          ],
+          "mots_cles": ["premier", "trimestre", "début", "grossesse", "3 mois"],
+          "intention": "grossesse_generale",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G004",
+          "question": "Que se passe-t-il au deuxième trimestre ?",
+          "reponse": "Le deuxième trimestre (semaines 14-27) est souvent le plus agréable. Les nausées diminuent, vous sentez le bébé bouger vers 20 semaines, votre ventre grossit. Le bébé se développe rapidement et vous passez l'échographie morphologique importante.",
+          "variations": [
+            "Deuxième trimestre de grossesse",
+            "Milieu de grossesse",
+            "4-6 mois de grossesse"
+          ],
+          "mots_cles": ["deuxième", "trimestre", "milieu", "mouvements", "bébé bouge"],
+          "intention": "grossesse_generale",
+          "source": "Guides médicaux",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G005",
+          "question": "Comment se préparer pour le troisième trimestre ?",
+          "reponse": "Le troisième trimestre (semaines 28-40) : préparez votre valise pour la maternité, suivez les cours de préparation à l'accouchement, surveillez les mouvements du bébé, reposez-vous beaucoup. Consultez régulièrement (toutes les 2 semaines puis chaque semaine).",
+          "variations": [
+            "Troisième trimestre grossesse",
+            "Fin de grossesse",
+            "Préparation accouchement"
+          ],
+          "mots_cles": ["troisième", "trimestre", "fin", "préparation", "accouchement"],
+          "intention": "grossesse_generale",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G006",
+          "question": "Puis-je voyager enceinte ?",
+          "reponse": "Le meilleur moment pour voyager est au 2ème trimestre (14-28 semaines). Évitez les longs voyages au 1er trimestre (risque de fausse couche) et au 3ème (risque d'accouchement prématuré). Consultez votre médecin avant tout voyage. En avion, levez-vous régulièrement.",
+          "variations": [
+            "Voyager pendant la grossesse",
+            "Prendre l'avion enceinte",
+            "Voyage et grossesse"
+          ],
+          "mots_cles": ["voyager", "voyage", "avion", "déplacement", "enceinte"],
+          "intention": "grossesse_generale",
+          "source": "Recommandations médicales",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G007",
+          "question": "Quelle prise de poids pendant la grossesse ?",
+          "reponse": "La prise de poids recommandée est de 11-16 kg pour un poids normal avant grossesse. Elle varie selon votre IMC initial : 12-18 kg si vous étiez maigre, 7-11 kg si en surpoids. Le gain se fait progressivement : 1-2 kg au 1er trimestre, puis 1,5-2 kg par mois.",
+          "variations": [
+            "Combien de kilos prendre enceinte",
+            "Poids grossesse normal",
+            "Prise de poids pendant grossesse"
+          ],
+          "mots_cles": ["poids", "kilos", "prendre", "prise", "normal"],
+          "intention": "grossesse_generale",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G008",
+          "question": "Peut-on avoir des rapports sexuels enceinte ?",
+          "reponse": "Oui, les rapports sexuels sont généralement sans danger pendant une grossesse normale. Le bébé est protégé par le liquide amniotique. Arrêtez si : saignements, douleurs, rupture de la poche des eaux, ou si votre médecin le recommande (placenta bas, risque d'accouchement prématuré).",
+          "variations": [
+            "Sexe pendant la grossesse",
+            "Faire l'amour enceinte",
+            "Rapports sexuels et grossesse"
+          ],
+          "mots_cles": ["rapports", "sexuels", "sexe", "amour", "enceinte"],
+          "intention": "grossesse_generale",
+          "source": "Guides médicaux",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G009",
+          "question": "Quand connaît-on le sexe du bébé ?",
+          "reponse": "Le sexe du bébé peut être visible à l'échographie à partir de 15-16 semaines, mais c'est surtout lors de l'échographie du 2ème trimestre (20-22 semaines) qu'il est confirmé avec certitude, si le bébé est bien positionné.",
+          "variations": [
+            "Savoir si c'est un garçon ou une fille",
+            "Déterminer le sexe du bébé",
+            "Échographie sexe bébé"
+          ],
+          "mots_cles": ["sexe", "garçon", "fille", "échographie", "connaître"],
+          "intention": "grossesse_generale",
+          "source": "Pratique médicale",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "G010",
+          "question": "Quels sports pratiquer enceinte ?",
+          "reponse": "Sports recommandés : marche, natation, yoga prénatal, gymnastique douce. Évitez : sports de contact, équitation, plongée, sports avec risque de chute. Écoutez votre corps, hydratez-vous, évitez l'épuisement. Consultez votre médecin avant de commencer.",
+          "variations": [
+            "Faire du sport enceinte",
+            "Activité physique grossesse",
+            "Exercices pendant grossesse"
+          ],
+          "mots_cles": ["sport", "exercice", "activité", "physique", "enceinte"],
+          "intention": "grossesse_generale",
+          "source": "OMS",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "soins_prenatals",
+      "description": "Consultations et examens pendant la grossesse",
+      "total": 40,
+      "qa": [
+        {
+          "id": "SP001",
+          "question": "Combien de consultations prénatales faut-il faire ?",
+          "reponse": "L'OMS recommande au moins 8 consultations prénatales : 1 avant 12 semaines, puis à 20, 26, 30, 34, 36, 38 et 40 semaines. En Afrique, un minimum de 4 consultations est acceptable si 8 n'est pas possible : à 16, 24-28, 32 et 36-38 semaines.",
+          "variations": [
+            "Nombre de visites prénatales",
+            "Calendrier consultations grossesse",
+            "Combien de fois voir le médecin"
+          ],
+          "mots_cles": ["consultations", "prénatales", "visites", "combien", "nombre"],
+          "intention": "soins_prenatals",
+          "source": "OMS 2016",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP002",
+          "question": "Quand faire la première consultation prénatale ?",
+          "reponse": "La première consultation doit être faite avant 12 semaines de grossesse, idéalement dès que vous savez que vous êtes enceinte. Cette visite permet : confirmer la grossesse, calculer la date d'accouchement, prescrire les examens, l'acide folique, et dépister les risques.",
+          "variations": [
+            "Première visite prénatale",
+            "Quand consulter enceinte",
+            "Premier rendez-vous grossesse"
+          ],
+          "mots_cles": ["première", "consultation", "quand", "début", "prénatale"],
+          "intention": "soins_prenatals",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP003",
+          "question": "Combien d'échographies pendant la grossesse ?",
+          "reponse": "L'OMS recommande au moins 1 échographie avant 24 semaines. Idéalement 3 échographies : 1ère à 12 semaines (datation), 2ème à 22 semaines (morphologie), 3ème à 32 semaines (croissance, position). Chaque échographie a un but spécifique important.",
+          "variations": [
+            "Nombre d'échographies grossesse",
+            "Quand faire les échographies",
+            "Échographies obligatoires"
+          ],
+          "mots_cles": ["échographie", "combien", "nombre", "quand", "grossesse"],
+          "intention": "soins_prenatals",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP004",
+          "question": "Que vérifie-t-on lors de l'échographie du 1er trimestre ?",
+          "reponse": "L'échographie de 12 semaines vérifie : le nombre de bébés, la date exacte de grossesse, la vitalité du fœtus, la position du placenta, l'anatomie visible, et la clarté nucale (dépistage Trisomie 21). C'est une échographie cruciale.",
+          "variations": [
+            "Échographie 12 semaines",
+            "Première échographie grossesse",
+            "Échographie datation"
+          ],
+          "mots_cles": ["échographie", "première", "12 semaines", "trimestre", "datation"],
+          "intention": "soins_prenatals",
+          "source": "Pratique médicale",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP005",
+          "question": "À quoi sert l'échographie morphologique ?",
+          "reponse": "L'échographie morphologique (20-22 semaines) est la plus importante. Elle examine en détail tous les organes du bébé : cerveau, cœur, reins, colonne, membres, visage. Elle détecte les malformations et vérifie la croissance. On peut voir le sexe si vous le souhaitez.",
+          "variations": [
+            "Échographie 22 semaines",
+            "Échographie morphologie",
+            "Deuxième échographie"
+          ],
+          "mots_cles": ["échographie", "morphologique", "22 semaines", "deuxième", "malformations"],
+          "intention": "soins_prenatals",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP006",
+          "question": "Quels examens sanguins faire pendant la grossesse ?",
+          "reponse": "Examens obligatoires : groupe sanguin et rhésus, recherche d'agglutinines irrégulières (RAI), sérologies (rubéole, toxoplasmose, syphilis, hépatite B, VIH), glycémie à jeun, numération formule sanguine. Tests du diabète gestationnel à 24-28 semaines.",
+          "variations": [
+            "Prises de sang grossesse",
+            "Analyses sanguines enceinte",
+            "Tests sanguins prénatals"
+          ],
+          "mots_cles": ["examens", "sanguins", "prises de sang", "analyses", "tests"],
+          "intention": "soins_prenatals",
+          "source": "Protocoles médicaux",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP007",
+          "question": "C'est quoi le test de dépistage du diabète gestationnel ?",
+          "reponse": "Entre 24-28 semaines, on teste le diabète gestationnel. Vous buvez 75g de glucose, puis on mesure la glycémie après 1h et 2h. Si élevée, c'est un diabète gestationnel qui nécessite un régime et parfois de l'insuline. Il disparaît après l'accouchement généralement.",
+          "variations": [
+            "Test glucose grossesse",
+            "Diabète gestationnel dépistage",
+            "Test O'Sullivan"
+          ],
+          "mots_cles": ["diabète", "gestationnel", "glucose", "test", "dépistage"],
+          "intention": "soins_prenatals",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP008",
+          "question": "Pourquoi surveiller la toxoplasmose pendant la grossesse ?",
+          "reponse": "La toxoplasmose est dangereuse pour le bébé si contractée pendant la grossesse. Si vous n'êtes pas immunisée, faites un test sanguin mensuel. Prévention : bien cuire la viande, laver les fruits/légumes, éviter contact avec litière de chat, porter des gants au jardinage.",
+          "variations": [
+            "Toxoplasmose et grossesse",
+            "Danger toxoplasmose enceinte",
+            "Prévention toxoplasmose"
+          ],
+          "mots_cles": ["toxoplasmose", "dépistage", "prévention", "chat", "viande"],
+          "intention": "soins_prenatals",
+          "source": "Recommandations médicales",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP009",
+          "question": "Que faire si je suis rhésus négatif ?",
+          "reponse": "Si vous êtes Rh négatif et le père Rh positif, vous recevez une injection d'immunoglobulines anti-D à 28 semaines et dans les 72h après l'accouchement. Cela prévient l'incompatibilité rhésus qui pourrait affecter les grossesses futures.",
+          "variations": [
+            "Rhésus négatif grossesse",
+            "Incompatibilité rhésus",
+            "Injection anti-D"
+          ],
+          "mots_cles": ["rhésus", "négatif", "anti-D", "incompatibilité", "injection"],
+          "intention": "soins_prenatals",
+          "source": "Protocoles médicaux",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SP010",
+          "question": "C'est quoi le monitoring fœtal ?",
+          "reponse": "Le monitoring enregistre le rythme cardiaque du bébé et les contractions utérines. Il est fait en fin de grossesse ou pendant le travail. Il permet de vérifier que le bébé supporte bien le travail et de détecter une souffrance fœtale.",
+          "variations": [
+            "Monitoring bébé",
+            "Enregistrement cardiaque fœtal",
+            "CTG grossesse"
+          ],
+          "mots_cles": ["monitoring", "rythme cardiaque", "CTG", "contractions", "bébé"],
+          "intention": "soins_prenatals",
+          "source": "Pratique obstétricale",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "nutrition_grossesse",
+      "description": "Alimentation et nutrition pendant la grossesse",
+      "total": 35,
+      "qa": [
+        {
+          "id": "N001",
+          "question": "Que manger pendant la grossesse ?",
+          "reponse": "Alimentation équilibrée : 5 portions fruits/légumes par jour, protéines (viande bien cuite, poisson, œufs, légumineuses), féculents, 3 produits laitiers/jour, eau (1,5-2L). Privilégiez fer, calcium, acide folique, iode. Mangez varié et écoutez votre faim.",
+          "variations": ["Alimentation grossesse", "Quoi manger enceinte", "Régime alimentaire grossesse"],
+          "mots_cles": ["manger", "alimentation", "nourriture", "régime", "enceinte"],
+          "intention": "nutrition_grossesse",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "N002",
+          "question": "Quels aliments éviter pendant la grossesse ?",
+          "reponse": "INTERDITS : alcool, tabac. ÉVITER : viandes/poissons crus (sushi, carpaccio), fromages lait cru, charcuterie non cuite, foie, œufs crus, coquillages crus. Bien laver fruits/légumes. Limiter caféine (<200mg/jour), thon (mercure).",
+          "variations": ["Aliments interdits grossesse", "Dangers alimentation enceinte", "Aliments à éviter"],
+          "mots_cles": ["éviter", "interdits", "dangers", "aliments", "ne pas manger"],
+          "intention": "nutrition_grossesse",
+          "source": "Recommandations médicales",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "N003",
+          "question": "Pourquoi prendre de l'acide folique ?",
+          "reponse": "L'acide folique (vitamine B9) prévient les malformations du tube neural (spina bifida). Dose : 400-800 μg/jour, à commencer AVANT la conception et continuer jusqu'à 12 semaines. On le trouve dans légumes verts, légumineuses, mais les suppléments sont recommandés.",
+          "variations": ["Acide folique grossesse", "Vitamine B9 enceinte", "Folates grossesse"],
+          "mots_cles": ["acide", "folique", "vitamine", "B9", "folates"],
+          "intention": "nutrition_grossesse",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "N004",
+          "question": "Puis-je boire du café enceinte ?",
+          "reponse": "Oui mais limitez à 200mg de caféine/jour (2 tasses de café). Trop de caféine augmente le risque de fausse couche et petit poids à la naissance. Attention : le thé, chocolat, sodas contiennent aussi de la caféine.",
+          "variations": ["Café et grossesse", "Caféine enceinte", "Boire café enceinte"],
+          "mots_cles": ["café", "caféine", "boire", "thé", "enceinte"],
+          "intention": "nutrition_grossesse",
+          "source": "Études médicales",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "N005",
+          "question": "Combien d'eau boire pendant la grossesse ?",
+          "reponse": "Buvez 1,5 à 2 litres d'eau par jour minimum. L'hydratation prévient les infections urinaires, la constipation, aide à former le liquide amniotique. Augmentez si chaleur ou exercice. Préférez l'eau aux boissons sucrées.",
+          "variations": ["Hydratation grossesse", "Quantité d'eau enceinte", "Boire eau grossesse"],
+          "mots_cles": ["eau", "boire", "hydratation", "litres", "liquide"],
+          "intention": "nutrition_grossesse",
+          "source": "Recommandations",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "vaccination",
+      "description": "Calendrier vaccinal de l'enfant",
+      "total": 30,
+      "qa": [
+        {
+          "id": "V001",
+          "question": "Quel est le calendrier vaccinal pour bébé ?",
+          "reponse": "NAISSANCE : BCG, Hépatite B (1ère dose), Polio 0. 6 SEMAINES : Pentavalent 1, VPO 1, Pneumocoque 1, Rotavirus 1. 10 SEMAINES : Pentavalent 2, VPO 2, Pneumocoque 2, Rotavirus 2. 14 SEMAINES : Pentavalent 3, VPO 3, Pneumocoque 3, VPI. 9 MOIS : Rougeole-Rubéole, Fièvre jaune. 15 MOIS : Rougeole-Rubéole rappel.",
+          "variations": ["Vaccins bébé", "Programme vaccination", "Quand vacciner bébé"],
+          "mots_cles": ["vaccin", "calendrier", "vaccinal", "bébé", "programme"],
+          "intention": "vaccination",
+          "source": "Programme Élargi de Vaccination OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "V002",
+          "question": "Pourquoi vacciner son enfant ?",
+          "reponse": "Les vaccins protègent contre des maladies graves (rougeole, polio, tétanos, coqueluche, méningite). Ils sauvent des millions de vies. La vaccination protège aussi la communauté (immunité collective). Les vaccins sont sûrs, efficaces et gratuits dans les centres de santé.",
+          "variations": ["Importance vaccination", "Pourquoi vacciner", "Utilité vaccins"],
+          "mots_cles": ["pourquoi", "vacciner", "importance", "utilité", "protection"],
+          "intention": "vaccination",
+          "source": "OMS/UNICEF",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "V003",
+          "question": "Qu'est-ce que le vaccin pentavalent ?",
+          "reponse": "Le pentavalent protège contre 5 maladies : Diphtérie, Tétanos, Coqueluche, Hépatite B, Haemophilus influenzae b (méningite). Il est donné en 3 doses à 6, 10 et 14 semaines. C'est un vaccin combiné très important.",
+          "variations": ["Pentavalent vaccin", "5 en 1 vaccin", "DTC-HepB-Hib"],
+          "mots_cles": ["pentavalent", "5 maladies", "DTC", "combiné"],
+          "intention": "vaccination",
+          "source": "Programme vaccination",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "V004",
+          "question": "Mon bébé a raté un vaccin, que faire ?",
+          "reponse": "Pas de panique ! Allez au centre de santé dès que possible pour rattraper. On ne recommence pas tout à zéro. L'agent de santé vous dira quels vaccins faire. Il n'est jamais trop tard pour vacciner, même si le calendrier est en retard.",
+          "variations": ["Rattraper vaccin retard", "Vaccin manqué", "Retard vaccination"],
+          "mots_cles": ["raté", "manqué", "retard", "rattraper", "oublié"],
+          "intention": "vaccination",
+          "source": "Directives OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "V005",
+          "question": "Les vaccins ont-ils des effets secondaires ?",
+          "reponse": "Effets courants et bénins : légère fièvre, douleur au point d'injection, irritabilité pendant 1-2 jours. Donnez du paracétamol si nécessaire. Effets graves sont très rares. Les bénéfices des vaccins dépassent largement les risques.",
+          "variations": ["Effets secondaires vaccins", "Réactions vaccins", "Dangers vaccins"],
+          "mots_cles": ["effets", "secondaires", "réactions", "dangers", "risques"],
+          "intention": "vaccination",
+          "source": "OMS",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "symptomes_alerte",
+      "description": "Signes de danger nécessitant consultation urgente",
+      "total": 25,
+      "qa": [
+        {
+          "id": "SA001",
+          "question": "Quels sont les signes de danger pendant la grossesse ?",
+          "reponse": "URGENCE IMMÉDIATE : saignements vaginaux abondants, douleurs abdominales sévères, maux de tête violents + vision floue, fièvre >38,5°C, liquide qui coule (poche des eaux), absence de mouvements bébé >12h, contractions régulières avant 37 semaines, gonflement soudain mains/visage. APPELEZ LE 15 OU URGENCES !",
+          "variations": ["Dangers grossesse", "Signes urgence enceinte", "Quand consulter urgence"],
+          "mots_cles": ["danger", "urgence", "signes", "alerte", "consulter"],
+          "intention": "symptomes_alerte",
+          "source": "Protocoles obstétriques OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SA002",
+          "question": "Que faire en cas de saignements pendant la grossesse ?",
+          "reponse": "Tout saignement nécessite consultation. 1er trimestre : risque de fausse couche. 2ème/3ème trimestre : peut être grave (placenta prævia, décollement). Allongez-vous, ne mettez rien dans le vagin, allez aux urgences immédiatement. Même de petits saignements doivent être signalés.",
+          "variations": ["Saignement grossesse", "Pertes sang enceinte", "Sang pendant grossesse"],
+          "mots_cles": ["saignement", "sang", "pertes", "rouges", "hémorragie"],
+          "intention": "symptomes_alerte",
+          "source": "Urgences obstétriques",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SA003",
+          "question": "Comment savoir si bébé bouge normalement ?",
+          "reponse": "À partir de 28 semaines, comptez les mouvements : bébé doit bouger au moins 10 fois en 2 heures quand vous vous concentrez. Si moins de mouvements que d'habitude, allongez-vous sur le côté, mangez sucré, attendez 1h. Si toujours pas de mouvements, URGENCES immédiatement !",
+          "variations": ["Mouvements bébé", "Bébé ne bouge pas", "Compter mouvements fœtaux"],
+          "mots_cles": ["mouvements", "bébé", "bouge", "bouger", "fœtus"],
+          "intention": "symptomes_alerte",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SA004",
+          "question": "C'est quoi la pré-éclampsie ?",
+          "reponse": "Complication grave : hypertension + protéines dans urines après 20 semaines. Signes : maux de tête violents, vision floue/mouches volantes, douleur sous côtes, gonflement soudain. Dangereux pour maman et bébé. Nécessite hospitalisation et surveillance. Peut mener à éclampsie (convulsions).",
+          "variations": ["Pré-éclampsie", "Toxémie gravidique", "Hypertension grossesse"],
+          "mots_cles": ["pré-éclampsie", "éclampsie", "hypertension", "toxémie", "tension"],
+          "intention": "symptomes_alerte",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SA005",
+          "question": "Quand aller à la maternité pour accoucher ?",
+          "reponse": "Allez quand : contractions régulières toutes les 5 min pendant 1h (pour 1ère grossesse) ou 10 min (grossesses suivantes), perte des eaux (liquide clair qui coule), saignements, douleurs intenses, bébé ne bouge plus. Première grossesse : partez plus tôt, le travail est plus long.",
+          "variations": ["Signes travail accouchement", "Quand partir maternité", "Début accouchement"],
+          "mots_cles": ["accouchement", "travail", "maternité", "partir", "contractions"],
+          "intention": "symptomes_alerte",
+          "source": "Protocoles maternité",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "soins_postnatal",
+      "description": "Soins après l'accouchement pour maman et bébé",
+      "total": 30,
+      "qa": [
+        {
+          "id": "SPN001",
+          "question": "Que faire juste après l'accouchement ?",
+          "reponse": "Peau à peau immédiat avec bébé (1ère heure), mettre bébé au sein dans la 1ère heure, rester 2h en salle de naissance sous surveillance. Vous aurez des contractions (tranchées) pour expulser le placenta et rétracter l'utérus. Repos, hydratation, uriner dans les 6h.",
+          "variations": ["Après accouchement", "Post-partum immédiat", "Suites de couches"],
+          "mots_cles": ["après", "accouchement", "post-partum", "suites", "couches"],
+          "intention": "soins_postnatal",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SPN002",
+          "question": "Combien de temps durent les saignements après accouchement ?",
+          "reponse": "Les lochies (saignements) durent 2-6 semaines. Rouge vif les premiers jours, puis rosé, puis jaunâtre. Utilisez serviettes hygiéniques, pas de tampons. Si saignements abondants (>1 serviette/h), odeur nauséabonde, caillots gros, fièvre : consultez urgence.",
+          "variations": ["Lochies", "Saignements post-partum", "Pertes après accouchement"],
+          "mots_cles": ["saignements", "lochies", "pertes", "après", "accouchement"],
+          "intention": "soins_postnatal",
+          "source": "Suivi post-natal",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SPN003",
+          "question": "Comment soigner l'épisiotomie ou déchirure ?",
+          "reponse": "Lavez à l'eau tiède après chaque toilette, séchez doucement. Changez serviettes fréquemment. Paracétamol si douleur. Points résorbables partent seuls en 2-3 semaines. Consultez si : douleur intense, rougeur, gonflement, écoulement purulent, fièvre, ouverture de la cicatrice.",
+          "variations": ["Épisiotomie soins", "Déchirure périnée", "Points après accouchement"],
+          "mots_cles": ["épisiotomie", "déchirure", "points", "périnée", "cicatrice"],
+          "intention": "soins_postnatal",
+          "source": "Protocoles post-natals",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SPN004",
+          "question": "C'est quoi le baby blues ?",
+          "reponse": "Le baby blues touche 50-80% des mamans vers jour 3-10. Symptômes : pleurs sans raison, tristesse, irritabilité, fatigue, anxiété. C'est NORMAL, dû aux hormones. Ça passe en 1-2 semaines. Parlez-en, reposez-vous, acceptez l'aide. Si >2 semaines ou idées noires : dépression post-partum, consultez !",
+          "variations": ["Baby blues", "Tristesse après accouchement", "Dépression post-partum"],
+          "mots_cles": ["baby blues", "tristesse", "dépression", "post-partum", "pleurs"],
+          "intention": "soins_postnatal",
+          "source": "Santé mentale maternelle",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "SPN005",
+          "question": "Quand reprendre les rapports sexuels après accouchement ?",
+          "reponse": "Attendez au moins 3-6 semaines, ou jusqu'à ce que vous vous sentiez prête et que les saignements aient cessé. Utilisez un lubrifiant (sécheresse normale). Contraception dès la reprise : l'allaitement seul ne protège pas ! Discutez contraception lors visite post-natale.",
+          "variations": ["Sexe après accouchement", "Rapports post-partum", "Quand faire l'amour"],
+          "mots_cles": ["rapports", "sexuels", "sexe", "amour", "reprendre"],
+          "intention": "soins_postnatal",
+          "source": "Conseils post-natals",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "allaitement",
+      "description": "Allaitement maternel et nutrition du nourrisson",
+      "total": 35,
+      "qa": [
+        {
+          "id": "AL001",
+          "question": "Pourquoi l'allaitement est-il recommandé ?",
+          "reponse": "L'OMS recommande allaitement exclusif 6 mois puis avec alimentation complémentaire jusqu'à 2 ans. Avantages bébé : anticorps, nutrition parfaite, moins infections/allergies, développement cérébral. Avantages maman : lien, récupération utérus, moins cancers sein/ovaires, économique.",
+          "variations": ["Avantages allaitement", "Pourquoi allaiter", "Bienfaits lait maternel"],
+          "mots_cles": ["allaitement", "pourquoi", "avantages", "bienfaits", "maternel"],
+          "intention": "allaitement",
+          "source": "OMS/UNICEF",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "AL002",
+          "question": "Comment bien démarrer l'allaitement ?",
+          "reponse": "Mettez bébé au sein dans la 1ère heure. Peau à peau favorise la tétée. Bonne position : bébé face à vous, ventre contre ventre, nez face au mamelon. Bonne prise : bouche grande ouverte, mamelon + aréole dedans. Allaitez à la demande, 8-12 fois/24h. Les premières tétées stimulent la montée de lait.",
+          "variations": ["Débuter allaitement", "Première tétée", "Commencer allaiter"],
+          "mots_cles": ["démarrer", "débuter", "commencer", "première", "tétée"],
+          "intention": "allaitement",
+          "source": "Guides allaitement OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "AL003",
+          "question": "À quelle fréquence allaiter ?",
+          "reponse": "Allaitez À LA DEMANDE : dès que bébé montre des signes de faim (bouge, suce, cherche). Nouveau-né : 8-12 fois/24h, jour ET nuit. Durée : 10-45 min par sein. Videz un sein avant de passer à l'autre. Plus bébé tète, plus vous produisez de lait. Ne regardez pas l'horloge !",
+          "variations": ["Fréquence allaitement", "Combien de tétées", "Allaiter la nuit"],
+          "mots_cles": ["fréquence", "combien", "fois", "tétées", "demande"],
+          "intention": "allaitement",
+          "source": "Lactation internationale",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "AL004",
+          "question": "Comment savoir si bébé reçoit assez de lait ?",
+          "reponse": "Signes bébé bien nourri : 6-8 couches mouillées/jour, selles fréquentes, prend du poids régulièrement, éveillé et actif, peau élastique. Mauvais signes : perte de poids >10%, moins 6 couches/jour, urine concentrée, lèvres sèches, fontanelle creusée, léthargie. Consultez si doute.",
+          "variations": ["Bébé a assez de lait", "Suffisamment de lait", "Manque de lait"],
+          "mots_cles": ["assez", "suffisamment", "manque", "lait", "quantité"],
+          "intention": "allaitement",
+          "source": "OMS",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "AL005",
+          "question": "Que faire en cas de crevasses ?",
+          "reponse": "Crevasses = mauvaise position ou prise. Corrigez : bouche grande ouverte, mamelon + aréole dedans. Soins : exprimez goutte de lait après tétée et étalez sur mamelon, séchage à l'air, changez coussinets souvent. Lanoline pure si nécessaire. Si douleur persiste, consultez conseillère en lactation.",
+          "variations": ["Crevasses allaitement", "Mamelons douloureux", "Douleur tétons"],
+          "mots_cles": ["crevasses", "douleur", "mamelons", "tétons", "mal"],
+          "intention": "allaitement",
+          "source": "Consultants lactation",
+          "fiabilite": "haute"
+        }
+      ]
+    },
+    
+    {
+      "categorie": "developpement_bebe",
+      "description": "Croissance et développement de l'enfant",
+      "total": 30,
+      "qa": [
+        {
+          "id": "DB001",
+          "question": "Quelles sont les étapes de développement d'un bébé ?",
+          "reponse": "0-3 MOIS : suit regard, sourit, tient tête brièvement. 4-6 MOIS : se retourne, rit, saisit objets, babille. 7-9 MOIS : s'assoit seul, rampe, dit syllabes. 10-12 MOIS : se met debout, marche avec aide, dit maman/papa. 12-18 MOIS : marche seul, 10-20 mots, mange seul. IMPORTANT : chaque bébé son rythme !",
+          "variations": ["Développement bébé", "Étapes bébé", "Acquisitions nourrisson"],
+          "mots_cles": ["développement", "étapes", "acquisitions", "croissance", "bébé"],
+          "intention": "developpement_bebe",
+          "source": "OMS/Pédiatrie",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "DB002",
+          "question": "Quand bébé tient-il sa tête ?",
+          "reponse": "Vers 2-4 mois, bébé tient sa tête sans aide quand on le porte. Avant 2 mois, soutenez toujours la tête. Stimulation : temps sur le ventre plusieurs fois/jour sous surveillance. Si pas de contrôle tête à 4 mois, consultez pédiatre.",
+          "variations": ["Tenir la tête", "Contrôle tête bébé", "Tête bébé"],
+          "mots_cles": ["tête", "tenir", "contrôle", "cou", "soutenir"],
+          "intention": "developpement_bebe",
+          "source": "Développement moteur",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "DB003",
+          "question": "À quel âge bébé marche-t-il ?",
+          "reponse": "La marche débute entre 9-18 mois (moyenne 12-13 mois). Progression : rampe (6-10 mois), 4 pattes (7-10 mois), se met debout avec appui (9-12 mois), marche avec aide (10-14 mois), marche seul (12-18 mois). Avant : trotteur DÉCONSEILLÉ (dangereux, retarde marche).",
+          "variations": ["Bébé marche", "Premiers pas", "Apprentissage marche"],
+          "mots_cles": ["marche", "marcher", "pas", "debout", "ambuler"],
+          "intention": "developpement_bebe",
+          "source": "Pédiatrie développementale",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "DB004",
+          "question": "Quand apparaissent les premières dents ?",
+          "reponse": "Premières dents vers 6 mois (4-12 mois possible). Ordre : incisives centrales bas, puis haut, incisives latérales, molaires, canines. 20 dents de lait vers 2,5-3 ans. Signes : bave, mordille, joues rouges, irritabilité, fesses rouges. Massez gencives, anneau de dentition froid. Pas de gel anesthésiant avant 2 ans.",
+          "variations": ["Poussée dentaire", "Premières dents", "Dents bébé"],
+          "mots_cles": ["dents", "dentaire", "poussée", "gencives", "mordiller"],
+          "intention": "developpement_bebe",
+          "source": "Pédodontie",
+          "fiabilite": "haute"
+        },
+        {
+          "id": "DB005",
+          "question": "Quand bébé dit-il ses premiers mots ?",
+          "reponse": "Babillage 4-6 mois (ba-ba, da-da). Premier mot significatif 10-15 mois (papa, mama). 18 mois : 10-20 mots. 2 ans : 50+ mots, petites phrases. Stimulation : parlez beaucoup, chantez, lisez histoires, nommez objets. Pas d'écrans avant 3 ans ! Si pas de mots à 18 mois, consultez.",
+          "variations": ["Langage bébé", "Premiers mots", "Parler bébé"],
+          "mots_cles": ["langage", "mots", "parler", "parole", "babillage"],
+          "intention": "developpement_bebe",
+          "source": "Orthophonie pédiatrique",
+          "fiabilite": "haute"
+        }
+      ]
+    }
+  ]
+}

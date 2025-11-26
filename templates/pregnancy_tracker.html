@@ -1,0 +1,344 @@
+{% extends "layout.html" %}
+
+{% block title %}Suivi Grossesse - Maman & Bébé{% endblock %}
+
+{% block extra_css %}
+<style>
+.week-card {
+    transition: transform 0.2s;
+    border-left: 4px solid #20c997;
+}
+.week-card:hover {
+    transform: translateY(-2px);
+}
+.current-week {
+    border-left-color: #dc3545;
+    background-color: #f8f9fa;
+}
+.development-timeline {
+    border-left: 3px solid #0d6efd;
+    margin-left: 10px;
+}
+.timeline-item {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #0d6efd;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- En-tête -->
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="fw-bold">
+                <i class="fas fa-baby-carriage me-2 text-success"></i>
+                Suivi de Grossesse
+            </h1>
+            <p class="text-muted">Suivez l'évolution de votre grossesse semaine par semaine</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pregnancyModal">
+                <i class="fas fa-plus me-1"></i>
+                {% if pregnancy %}Modifier{% else %}Ajouter{% endif %} la grossesse
+            </button>
+        </div>
+    </div>
+
+    {% if pregnancy %}
+    <!-- Dashboard Grossesse -->
+    <div class="row mb-5">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-chart-line me-2"></i>Progression
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-center">
+                            <div class="display-4 fw-bold text-success">{{ pregnancy.week_current }}</div>
+                            <small class="text-muted">Semaines d'aménorrhée</small>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
+                                     style="width: {{ (pregnancy.week_current / 40) * 100 }}%">
+                                    {{ (pregnancy.week_current / 40) * 100 }}%
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span>Semaine 1</span>
+                                <span>Terme (40 SA)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <i class="fas fa-calendar-plus fa-2x text-info mb-2"></i>
+                                <h6>Début</h6>
+                                <p class="mb-0 fw-bold">{{ pregnancy.start_date.strftime('%d/%m/%Y') }}</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <i class="fas fa-baby fa-2x text-warning mb-2"></i>
+                                <h6>Terme prévu</h6>
+                                <p class="mb-0 fw-bold">{{ pregnancy.due_date.strftime('%d/%m/%Y') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="badge bg-{{ 'success' if pregnancy.trimester == 1 else 'warning' if pregnancy.trimester == 2 else 'danger' }}">
+                            {{ pregnancy.trimester }}ème trimestre
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Développement du bébé -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-heartbeat me-2"></i>Développement de Bébé
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="development-timeline">
+                        <div class="timeline-item">
+                            <h6 class="text-primary">Semaine {{ pregnancy.week_current }}</h6>
+                            <p class="mb-0">{{ baby_development }}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Prochaines étapes -->
+                    <div class="mt-4">
+                        <h6>Prochaines étapes importantes :</h6>
+                        <div class="row g-2">
+                            {% set next_milestones = [
+                                (12, "Échographie de datation", "primary"),
+                                (22, "Échographie morphologique", "success"), 
+                                (32, "Dernière échographie", "warning"),
+                                (40, "Terme de la grossesse", "danger")
+                            ] %}
+                            {% for week, text, color in next_milestones %}
+                                {% if week > pregnancy.week_current %}
+                                <div class="col-md-6">
+                                    <div class="alert alert-{{ color }} mb-2 py-2">
+                                        <i class="fas fa-flag me-2"></i>
+                                        <strong>Semaine {{ week }} :</strong> {{ text }}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Semaines importantes -->
+    <div class="row">
+        <div class="col-12">
+            <h4 class="mb-4">
+                <i class="fas fa-calendar-alt me-2 text-info"></i>
+                Semaines Clés de la Grossesse
+            </h4>
+            
+            <div class="row g-3">
+                {% set key_weeks = [
+                    (4, "Cœur qui bat", "Début des battements cardiaques"),
+                    (8, "Organes formés", "Tous les organes sont présents"),
+                    (12, "1ère échographie", "Échographie de datation"),
+                    (16, "Mouvements", "Premiers mouvements ressentis"),
+                    (20, "Échographie morpho", "Examen détaillé du bébé"),
+                    (24, "Viable", "Bébé considéré comme viable"),
+                    (28, "3ème trimestre", "Début du dernier trimestre"),
+                    (32, "Dernière écho", "Dernière échographie"),
+                    (36, "Préparation", "Bébé se positionne"),
+                    (40, "Terme", "Date prévue d'accouchement")
+                ] %}
+                
+                {% for week, title, description in key_weeks %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card week-card {{ 'current-week' if week == pregnancy.week_current else '' }}">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="card-title mb-0">Semaine {{ week }}</h6>
+                                {% if week == pregnancy.week_current %}
+                                <span class="badge bg-danger">Actuelle</span>
+                                {% elif week < pregnancy.week_current %}
+                                <span class="badge bg-success">Passée</span>
+                                {% else %}
+                                <span class="badge bg-secondary">À venir</span>
+                                {% endif %}
+                            </div>
+                            <h6 class="text-primary">{{ title }}</h6>
+                            <p class="card-text small text-muted mb-0">{{ description }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- État sans grossesse enregistrée -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card text-center py-5">
+                <div class="card-body">
+                    <i class="fas fa-baby-carriage fa-4x text-muted mb-4"></i>
+                    <h3 class="text-muted mb-3">Aucune grossesse enregistrée</h3>
+                    <p class="text-muted mb-4">
+                        Ajoutez votre grossesse pour bénéficier d'un suivi personnalisé 
+                        semaine par semaine et recevoir des informations adaptées.
+                    </p>
+                    <button class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#pregnancyModal">
+                        <i class="fas fa-plus me-2"></i>Ajouter ma grossesse
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Modal Ajout/Modification Grossesse -->
+<div class="modal fade" id="pregnancyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-baby me-2"></i>
+                    {% if pregnancy %}Modifier{% else %}Ajouter{% endif %} la grossesse
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="pregnancyForm">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="startDate" class="form-label">
+                            <i class="fas fa-calendar-plus me-1"></i>
+                            Date des dernières règles
+                        </label>
+                        <input type="date" class="form-control" id="startDate" required
+                               value="{{ pregnancy.start_date.strftime('%Y-%m-%d') if pregnancy else '' }}">
+                        <div class="form-text">
+                            La date de début de grossesse est calculée à partir de cette date.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-stethoscope me-1"></i>
+                            Antécédents médicaux
+                        </label>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="diabetes">
+                            <label class="form-check-label" for="diabetes">Diabète</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="hypertension">
+                            <label class="form-check-label" for="hypertension">Hypertension</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="allergies">
+                            <label class="form-check-label" for="allergies">Allergies</label>
+                        </div>
+                    </div>
+                    
+                    {% if pregnancy %}
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        La modification de la date recalculera automatiquement 
+                        la semaine de grossesse et la date prévue d'accouchement.
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save me-1"></i>
+                        {% if pregnancy %}Mettre à jour{% else %}Enregistrer{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('pregnancyForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        start_date: document.getElementById('startDate').value,
+        medical_history: {
+            diabetes: document.getElementById('diabetes').checked,
+            hypertension: document.getElementById('hypertension').checked,
+            allergies: document.getElementById('allergies').checked
+        }
+    };
+    
+    fetch('/api/pregnancy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            location.reload();
+        } else {
+            alert('Erreur: ' + data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Erreur lors de la sauvegarde');
+    });
+});
+
+// Calcul automatique de la date prévue
+document.getElementById('startDate').addEventListener('change', function() {
+    if (this.value) {
+        const startDate = new Date(this.value);
+        const dueDate = new Date(startDate);
+        dueDate.setDate(dueDate.getDate() + 280); // 40 semaines
+        
+        const dueDateStr = dueDate.toISOString().split('T')[0];
+        console.log('Date prévue:', dueDate.toLocaleDateString('fr-FR'));
+    }
+});
+</script>
+{% endblock %}
