@@ -305,5 +305,104 @@ document.addEventListener('DOMContentLoaded', function() {
         addChildField();
     }
 });
+
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.innerHTML;
+    submitButton.innerHTML = '<span class="loading-spinner me-2"></span>Création en cours...';
+    submitButton.disabled = true;
+    
+    // Récupération des données
+    const formData = {
+        nom: document.getElementById('nom').value,
+        prenom: document.getElementById('prenom').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        date_naissance: document.getElementById('date_naissance').value,
+        statut: document.querySelector('input[name="statut"]:checked').value,
+        groupe_sanguin: document.getElementById('groupe_sanguin').value,
+        allergies: document.getElementById('allergies').value,
+        traitements: document.getElementById('traitements').value,
+        children: getChildrenData()
+    };
+    
+    console.log('📤 Données envoyées:', formData);
+    
+    fetch('/api/profile', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        return response.json().then(data => ({ 
+            status: response.status, 
+            data 
+        }));
+    })
+    .then(({ status, data }) => {
+        console.log('📥 Réponse API:', { status, data });
+        
+        if (status === 200) {
+            // Succès
+            showNotification('success', data.message || 'Profil créé avec succès !');
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1500);
+        } else if (status === 400) {
+            // Erreur de doublon ou validation
+            showNotification('error', data.error || 'Données invalides');
+            
+            // Surligner les champs en erreur
+            if (data.error.includes('email')) {
+                document.getElementById('email').classList.add('is-invalid');
+            }
+            if (data.error.includes('téléphone')) {
+                document.getElementById('phone').classList.add('is-invalid');
+            }
+        } else {
+            // Autre erreur
+            throw new Error(data.error || `Erreur ${status}`);
+        }
+    })
+    .catch(error => {
+        console.error('❌ Erreur:', error);
+        showNotification('error', 'Erreur: ' + error.message);
+    })
+    .finally(() => {
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+    });
+});
+
+function showNotification(type, message) {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check' : 'exclamation-triangle'} me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.querySelector('main').prepend(notification);
+    
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+
+// Supprimer les classes d'erreur quand l'utilisateur tape
+document.getElementById('email').addEventListener('input', function() {
+    this.classList.remove('is-invalid');
+});
+
+document.getElementById('phone').addEventListener('input', function() {
+    this.classList.remove('is-invalid');
+});
 </script>
 {% endblock %}

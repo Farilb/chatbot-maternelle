@@ -59,15 +59,17 @@
                     <div class="text-center mb-4">
                         <div class="pregnancy-progress mb-3">
                             <div class="progress" style="height: 20px;">
+                                <!-- 🔥 CORRECTION : Utiliser week_current du contexte -->
                                 <div class="progress-bar bg-success" 
-                                     style="width: {{ (pregnancy.week_current / 40) * 100 }}%">
-                                    {{ pregnancy.week_current }}/40 semaines
+                                     style="width: {{ (week_current / 40) * 100 }}%">
+                                    {{ week_current }}/40 semaines
                                 </div>
                             </div>
                         </div>
-                        <h3 class="text-success">{{ pregnancy.week_current }} SA</h3>
+                        <h3 class="text-success">{{ week_current }} SA</h3>
                         <p class="text-muted">
-                            {{ pregnancy.trimester }}ème trimestre
+                            <!-- 🔥 CORRECTION : Utiliser trimester du contexte -->
+                            {{ trimester }}ème trimestre
                         </p>
                     </div>
                     
@@ -182,9 +184,8 @@
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <h3 class="text-success">
-                        {% if pregnancy %}{{ pregnancy.week_current }}{% else %}0{% endif %}
-                    </h3>
+                    <!-- 🔥 CORRECTION : Utiliser week_current du contexte -->
+                    <h3 class="text-success">{{ week_current }}</h3>
                     <p class="text-muted mb-0">Semaines</p>
                 </div>
             </div>

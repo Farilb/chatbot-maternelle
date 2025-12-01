@@ -10,6 +10,12 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100">
+    <!-- 🔥 CORRECTION : Passer is_authenticated au JavaScript global -->
+    <script>
+        window.isAuthenticated = {{ 'true' if is_authenticated else 'false' }};
+        window.userProfile = {{ user_profile|tojson|safe if user_profile else 'null' }};
+    </script>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-pink">
         <div class="container">
@@ -26,29 +32,62 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('index') }}">Accueil</a>
                     </li>
+                    
+                    {% if is_authenticated %}
+                    <!-- Menu pour utilisateurs connectés -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('chat') }}">Assistant</a>
+                        <a class="nav-link" href="{{ url_for('chat') }}">
+                            <i class="fas fa-robot me-1"></i>Assistant
+                        </a>
                     </li>
-                    {% if user_type != 'guest' %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('dashboard') }}">Tableau de Bord</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('pregnancy_tracker') }}">Suivi Grossesse</a>
                     </li>
+                    {% else %}
+                    <!-- Menu pour invités -->
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="{{ url_for('profile_setup') }}">
+                            <i class="fas fa-lock me-1"></i>Assistant
+                        </a>
+                    </li>
                     {% endif %}
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('emergency_info') }}">Urgences</a>
+                    </li>
                 </ul>
                 
                 <div class="navbar-nav">
-                    {% if user_type == 'guest' %}
+                    {% if is_authenticated %}
+                    <!-- Utilisateur connecté -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user me-1"></i>
+                            {{ user_profile.prenom if user_profile else 'Mon Compte' }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url_for('dashboard') }}">
+                                <i class="fas fa-chart-line me-2"></i>Tableau de bord
+                            </a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('profile_setup') }}">
+                                <i class="fas fa-edit me-2"></i>Modifier le profil
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{{ url_for('logout') }}">
+                                <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
+                            </a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <!-- Invité -->
                     <a class="btn btn-outline-light me-2" href="{{ url_for('profile_setup') }}">
                         <i class="fas fa-user-plus me-1"></i>Créer Profil
                     </a>
-                    {% else %}
-                    <span class="navbar-text me-3">
-                        <i class="fas fa-user me-1"></i>Bienvenue !
-                    </span>
                     {% endif %}
+                    
                     <a class="btn btn-danger" href="{{ url_for('emergency_info') }}">
                         <i class="fas fa-phone-alt me-1"></i>Urgences
                     </a>
@@ -58,11 +97,11 @@
     </nav>
 
     <!-- Messages Flash -->
-    {% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         <div class="container mt-3">
-            {% for message in messages %}
-            <div class="alert alert-info alert-dismissible fade show">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ 'danger' if category == 'error' else 'warning' if category == 'warning' else 'info' }} alert-dismissible fade show">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
@@ -83,10 +122,17 @@
                 <div class="col-md-6">
                     <h5><i class="fas fa-heart me-2"></i>Maman & Bébé</h5>
                     <p class="mb-0">Votre assistant santé maternelle et infantile</p>
+                    <small>
+                        {% if is_authenticated %}
+                        ✅ Connecté en tant que {{ user_profile.prenom if user_profile else 'Utilisateur' }}
+                        {% else %}
+                        🔒 Authentification requise pour l'assistant
+                        {% endif %}
+                    </small>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p class="mb-1">
-                        <strong>Urgences :</strong> 15 (SAMU) • 112 (Urgence Européenne)
+                        <strong>Urgences :</strong> 112 (SAMU) • 18 (Sapeurs Pompiers) • 80 00 11 12 (Urgences Psychiatriques)
                     </p>
                     <p class="mb-0">
                         <small>⚠️ Cet assistant ne remplace pas une consultation médicale</small>

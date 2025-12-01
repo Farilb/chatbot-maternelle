@@ -69,14 +69,16 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-md-4 text-center">
-                            <div class="display-4 fw-bold text-success">{{ pregnancy.week_current }}</div>
+                            <!-- 🔥 CORRECTION : Utiliser week_current du contexte -->
+                            <div class="display-4 fw-bold text-success">{{ week_current }}</div>
                             <small class="text-muted">Semaines d'aménorrhée</small>
                         </div>
                         <div class="col-md-8">
                             <div class="progress mb-2" style="height: 25px;">
+                                <!-- 🔥 CORRECTION : Calcul basé sur week_current -->
                                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" 
-                                     style="width: {{ (pregnancy.week_current / 40) * 100 }}%">
-                                    {{ (pregnancy.week_current / 40) * 100 }}%
+                                     style="width: {{ (week_current / 40) * 100 }}%">
+                                    {{ "%.1f"|format((week_current / 40) * 100) }}%
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between text-muted small">
@@ -96,20 +98,35 @@
                             <div class="mb-3">
                                 <i class="fas fa-calendar-plus fa-2x text-info mb-2"></i>
                                 <h6>Début</h6>
-                                <p class="mb-0 fw-bold">{{ pregnancy.start_date.strftime('%d/%m/%Y') }}</p>
+                                <p class="mb-0 fw-bold">
+                                    <!-- 🔥 CORRECTION : Gestion des dates MongoDB -->
+                                    {% if pregnancy.start_date is string %}
+                                        {{ pregnancy.start_date[:10] }}
+                                    {% else %}
+                                        {{ pregnancy.start_date.strftime('%d/%m/%Y') }}
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="mb-3">
                                 <i class="fas fa-baby fa-2x text-warning mb-2"></i>
                                 <h6>Terme prévu</h6>
-                                <p class="mb-0 fw-bold">{{ pregnancy.due_date.strftime('%d/%m/%Y') }}</p>
+                                <p class="mb-0 fw-bold">
+                                    <!-- 🔥 CORRECTION : Gestion des dates MongoDB -->
+                                    {% if pregnancy.due_date is string %}
+                                        {{ pregnancy.due_date[:10] }}
+                                    {% else %}
+                                        {{ pregnancy.due_date.strftime('%d/%m/%Y') }}
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="mt-2">
-                        <span class="badge bg-{{ 'success' if pregnancy.trimester == 1 else 'warning' if pregnancy.trimester == 2 else 'danger' }}">
-                            {{ pregnancy.trimester }}ème trimestre
+                        <!-- 🔥 CORRECTION : Utiliser trimester du contexte -->
+                        <span class="badge bg-{{ 'success' if trimester == 1 else 'warning' if trimester == 2 else 'danger' }}">
+                            {{ trimester }}ème trimestre
                         </span>
                     </div>
                 </div>
@@ -129,7 +146,7 @@
                 <div class="card-body">
                     <div class="development-timeline">
                         <div class="timeline-item">
-                            <h6 class="text-primary">Semaine {{ pregnancy.week_current }}</h6>
+                            <h6 class="text-primary">Semaine {{ week_current }}</h6>
                             <p class="mb-0">{{ baby_development }}</p>
                         </div>
                     </div>
@@ -145,7 +162,7 @@
                                 (40, "Terme de la grossesse", "danger")
                             ] %}
                             {% for week, text, color in next_milestones %}
-                                {% if week > pregnancy.week_current %}
+                                {% if week > week_current %}
                                 <div class="col-md-6">
                                     <div class="alert alert-{{ color }} mb-2 py-2">
                                         <i class="fas fa-flag me-2"></i>
@@ -185,13 +202,13 @@
                 
                 {% for week, title, description in key_weeks %}
                 <div class="col-md-6 col-lg-4">
-                    <div class="card week-card {{ 'current-week' if week == pregnancy.week_current else '' }}">
+                    <div class="card week-card {{ 'current-week' if week == week_current else '' }}">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h6 class="card-title mb-0">Semaine {{ week }}</h6>
-                                {% if week == pregnancy.week_current %}
+                                {% if week == week_current %}
                                 <span class="badge bg-danger">Actuelle</span>
-                                {% elif week < pregnancy.week_current %}
+                                {% elif week < week_current %}
                                 <span class="badge bg-success">Passée</span>
                                 {% else %}
                                 <span class="badge bg-secondary">À venir</span>
@@ -248,7 +265,7 @@
                             Date des dernières règles
                         </label>
                         <input type="date" class="form-control" id="startDate" required
-                               value="{{ pregnancy.start_date.strftime('%Y-%m-%d') if pregnancy else '' }}">
+                               value="{{ pregnancy.start_date[:10] if pregnancy and pregnancy.start_date is string else (pregnancy.start_date.strftime('%Y-%m-%d') if pregnancy else '') }}">
                         <div class="form-text">
                             La date de début de grossesse est calculée à partir de cette date.
                         </div>
@@ -336,7 +353,6 @@ document.getElementById('startDate').addEventListener('change', function() {
         const dueDate = new Date(startDate);
         dueDate.setDate(dueDate.getDate() + 280); // 40 semaines
         
-        const dueDateStr = dueDate.toISOString().split('T')[0];
         console.log('Date prévue:', dueDate.toLocaleDateString('fr-FR'));
     }
 });

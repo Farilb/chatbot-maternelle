@@ -17,13 +17,33 @@
                     et bien plus encore.
                 </p>
                 <div class="d-flex gap-3 flex-wrap">
+                    {% if is_authenticated %}
                     <a href="{{ url_for('chat') }}" class="btn btn-light btn-lg">
                         <i class="fas fa-robot me-2"></i>Parler à l'Assistant
                     </a>
-                    <a href="{{ url_for('profile_setup') }}" class="btn btn-outline-light btn-lg">
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-chart-line me-2"></i>Tableau de Bord
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('profile_setup') }}" class="btn btn-light btn-lg">
                         <i class="fas fa-user-plus me-2"></i>Créer mon Profil
                     </a>
+                    <a href="{{ url_for('profile_setup') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-lock-open me-2"></i>Déverrouiller l'Assistant
+                    </a>
+                    {% endif %}
                 </div>
+                
+                <!-- Bannière d'information pour les invités -->
+                {% if not is_authenticated %}
+                <div class="alert alert-warning mt-4">
+                    <h6><i class="fas fa-info-circle me-2"></i>Accès Limité</h6>
+                    <p class="mb-0">
+                        L'assistant chatbot et les fonctionnalités avancées sont réservés aux utilisateurs inscrits. 
+                        <strong>Créez votre profil gratuitement</strong> pour bénéficier d'un accompagnement personnalisé.
+                    </p>
+                </div>
+                {% endif %}
             </div>
             <div class="col-lg-6 text-center">
                 <img src="{{ url_for('static', filename='images/hero-pregnancy.svg') }}" 
@@ -55,6 +75,13 @@
                             Réponses instantanées à vos questions sur la grossesse, 
                             l'allaitement, la nutrition et les soins du bébé.
                         </p>
+                        {% if not is_authenticated %}
+                        <div class="mt-3">
+                            <small class="text-warning">
+                                <i class="fas fa-lock me-1"></i>Inscription requise
+                            </small>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -70,6 +97,13 @@
                             Suivez l'évolution de votre grossesse semaine par semaine, 
                             avec des informations sur le développement de bébé.
                         </p>
+                        {% if not is_authenticated %}
+                        <div class="mt-3">
+                            <small class="text-warning">
+                                <i class="fas fa-lock me-1"></i>Inscription requise
+                            </small>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -85,6 +119,13 @@
                             Ne manquez plus aucun vaccin de votre enfant avec 
                             notre système de rappels intelligent.
                         </p>
+                        {% if not is_authenticated %}
+                        <div class="mt-3">
+                            <small class="text-warning">
+                                <i class="fas fa-lock me-1"></i>Inscription requise
+                            </small>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -118,15 +159,28 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            <i class="fas fa-calendar-check text-info me-2"></i>
-                            Suivi Personnalisé
+                            {% if is_authenticated %}
+                            <i class="fas fa-user-check text-success me-2"></i>
+                            Profil Complet
+                            {% else %}
+                            <i class="fas fa-user-plus text-info me-2"></i>
+                            Créer votre Profil
+                            {% endif %}
                         </h5>
                         <p class="card-text">
+                            {% if is_authenticated %}
+                            Votre profil est complet. Profitez de toutes les fonctionnalités !
+                            {% else %}
                             Créez votre profil pour un accompagnement sur mesure 
                             selon votre situation.
+                            {% endif %}
                         </p>
-                        <a href="{{ url_for('profile_setup') }}" class="btn btn-outline-info">
-                            Configurer mon profil
+                        <a href="{{ url_for('profile_setup') }}" class="btn btn-outline-{{ 'success' if is_authenticated else 'info' }}">
+                            {% if is_authenticated %}
+                            <i class="fas fa-edit me-1"></i>Modifier le profil
+                            {% else %}
+                            <i class="fas fa-user-plus me-1"></i>Créer mon profil
+                            {% endif %}
                         </a>
                     </div>
                 </div>
@@ -142,7 +196,7 @@
             <div class="col">
                 <i class="fas fa-exclamation-triangle me-2"></i>
                 <strong>URGENCE MÉDICALE ?</strong> 
-                Composez le <strong>15</strong> (SAMU) ou le <strong>112</strong> 
+                Composez le <strong>18</strong> (Sapeurs Pompiers) ou (SAMU) au <strong>112</strong> 
                 <span class="ms-3">|</span>
                 <span class="ms-3">Ce chatbot ne remplace pas une consultation médicale</span>
             </div>

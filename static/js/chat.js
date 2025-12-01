@@ -1,13 +1,75 @@
 // Gestion du chat
 class HealthChat {
     constructor() {
+
+        console.log('🔧 Initialisation du chat...');
+        console.log('🔐 Statut authentification:', window.isAuthenticated);
+        // Vérifier si l'utilisateur est authentifié
+        if (!window.isAuthenticated) {
+            this.showAuthenticationRequired();
+            return;
+        }
+
         this.messagesContainer = document.getElementById('chatMessages');
         this.messageInput = document.getElementById('messageInput');
         this.chatForm = document.getElementById('chatForm');
         this.sendButton = document.getElementById('sendButton');
         this.consultationsList = document.getElementById('consultationsList');
+
+        // Vérifier que les éléments existent
+        if (!this.messagesContainer || !this.messageInput || !this.chatForm) {
+            console.error('❌ Éléments du chat non trouvés');
+            this.showError('Erreur de chargement du chat');
+            return;
+        }
         
         this.init();
+    }
+
+    showAuthenticationRequired() {
+               console.log('🔒 Affichage message authentification requise');
+        const chatContainer = document.querySelector('.container-fluid') || document.querySelector('main');
+        
+        if (!chatContainer) {
+            console.error('❌ Container principal non trouvé');
+            return;
+        
+        chatContainer.innerHTML = `
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card text-center">
+                        <div class="card-body py-5">
+                            <i class="fas fa-lock fa-4x text-warning mb-4"></i>
+                            <h3 class="text-warning">Accès Verrouillé</h3>
+                            <p class="text-muted mb-4">
+                                L'assistant chatbot est réservé aux utilisateurs inscrits.
+                                Créez votre profil gratuitement pour bénéficier de cet accompagnement personnalisé.
+                            </p>
+                            <div class="d-flex gap-3 justify-content-center">
+                                <a href="/profile-setup" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-user-plus me-2"></i>Créer mon Profil
+                                </a>
+                                <a href="/" class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-home me-2"></i>Retour à l'accueil
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+    showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'alert alert-danger alert-dismissible fade show m-3';
+        errorDiv.innerHTML = `
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        document.querySelector('main').prepend(errorDiv);
     }
 
     init() {
@@ -336,7 +398,23 @@ class HealthChat {
 
 // Initialisation du chat
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 Page chat chargée');
+    
     if (document.getElementById('chatMessages')) {
-        window.healthChat = new HealthChat();
+        try {
+            window.healthChat = new HealthChat();
+        } catch (error) {
+            console.error('❌ Erreur initialisation chat:', error);
+            
+            // Afficher un message d'erreur générique
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger m-3';
+            errorDiv.innerHTML = `
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Erreur lors du chargement du chat. 
+                <a href="/" class="alert-link">Retour à l'accueil</a>
+            `;
+            document.querySelector('main').prepend(errorDiv);
+        }
     }
 });
