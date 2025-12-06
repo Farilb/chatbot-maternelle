@@ -14,89 +14,287 @@
             <p class="text-muted">Votre suivi santé personnalisé</p>
         </div>
         <div class="col-auto">
-            <a href="{{ url_for('profile_setup') }}" class="btn btn-outline-primary">
+            <a href="{{ url_for('profile') }}" class="btn btn-outline-primary me-2">
                 <i class="fas fa-edit me-1"></i>Modifier le profil
             </a>
+            <button class="btn btn-outline-info" onclick="refreshNotifications()">
+                <i class="fas fa-sync-alt me-1"></i>Actualiser
+            </button>
         </div>
     </div>
 
-    <!-- Alertes et Rappels -->
-    {% if vaccine_reminders %}
+    <!-- Notifications et Alertes en temps réel -->
     <div class="row mb-4">
-        <div class="col">
-            <div class="alert alert-warning">
-                <h5><i class="fas fa-bell me-2"></i>Rappels importants</h5>
-                <div class="mt-2">
-                    {% for reminder in vaccine_reminders %}
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <div>
-                            <strong>{{ reminder.child_name }}</strong> - 
-                            {{ ', '.join(reminder.vaccines) }}
-                            <small class="text-muted ms-2">({{ reminder.milestone }})</small>
-                        </div>
-                        <span class="badge bg-{{ 'danger' if reminder.status == 'due' else 'warning' }}">
-                            {{ 'À faire' if reminder.status == 'due' else 'Prochainement' }}
-                        </span>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-bell me-2"></i>Mes Notifications
+                        </h5>
+                        <button class="btn btn-sm btn-outline-dark" onclick="markAllAsRead()">
+                            <i class="fas fa-check-double me-1"></i>Tout marquer comme lu
+                        </button>
                     </div>
-                    {% endfor %}
+                </div>
+                <div class="card-body p-0">
+                    <!-- Liste des notifications -->
+                    <div id="notificationsContainer">
+                        {% if vaccine_reminders or consultations %}
+                        <div class="list-group list-group-flush">
+                            <!-- Rappels de vaccins -->
+                            {% for reminder in vaccine_reminders %}
+                            <div class="list-group-item list-group-item-action notification-item 
+                                        {% if reminder.status == 'due' %}notification-urgent{% else %}notification-warning{% endif %}"
+                                 onclick="showVaccineDetails('{{ reminder|tojson|safe }}')">
+                                <div class="d-flex w-100 justify-content-between align-items-start">
+                                    <div class="me-3">
+                                        <i class="fas fa-syringe fa-lg {% if reminder.status == 'due' %}text-danger{% else %}text-warning{% endif %}"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">
+                                            <i class="fas fa-baby me-1"></i>
+                                            {{ reminder.child_name }} - Rappel vaccin
+                                        </h6>
+                                        <p class="mb-1">{{ ', '.join(reminder.vaccines) }}</p>
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            {{ reminder.milestone }} - 
+                                            <span class="{% if reminder.status == 'due' %}text-danger fw-bold{% endif %}">
+                                                {{ 'À faire maintenant' if reminder.status == 'due' else 'Prochainement' }}
+                                            </span>
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <button class="btn btn-sm {% if reminder.status == 'due' %}btn-danger{% else %}btn-outline-warning{% endif %}"
+                                                onclick="event.stopPropagation(); markNotificationAsDone('vaccine_{{ loop.index }}')">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <small class="d-block mt-1 text-muted">
+                                            <i class="fas fa-clock me-1"></i>
+                                            {{ reminder.days_left }} jour{{ 's' if reminder.days_left > 1 else '' }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- Alertes urgentes des consultations -->
+                            {% for consult in consultations if consult.urgency == 'high' %}
+                            <div class="list-group-item list-group-item-action notification-item notification-danger"
+                                 onclick="showConsultationDetails('{{ consult._id|string if consult._id else loop.index }}')">
+                                <div class="d-flex w-100 justify-content-between align-items-start">
+                                    <div class="me-3">
+                                        <i class="fas fa-exclamation-triangle fa-lg text-danger"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">
+                                            <i class="fas fa-comment-medical me-1"></i>
+                                            Alerte Urgente
+                                        </h6>
+                                        <p class="mb-1">{{ consult.question|truncate(80) }}</p>
+                                        <small class="text-muted">
+                                            <i class="fas fa-clock me-1"></i>
+                                            {% if consult.date_consultation is string %}
+                                                {{ consult.date_consultation[:16]|replace('T', ' ') }}
+                                            {% else %}
+                                                {{ consult.date_consultation.strftime('%d/%m à %H:%M') }}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            onclick="event.stopPropagation(); showEmergencyInfo()">
+                                        <i class="fas fa-phone-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- Notifications de grossesse -->
+                            {% if pregnancy and week_current %}
+                            <!-- Notification de changement de semaine -->
+                            <div class="list-group-item list-group-item-action notification-item notification-success"
+                                 onclick="showPregnancyProgress()">
+                                <div class="d-flex w-100 justify-content-between align-items-start">
+                                    <div class="me-3">
+                                        <i class="fas fa-baby-carriage fa-lg text-success"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">
+                                            <i class="fas fa-heartbeat me-1"></i>
+                                            Semaine {{ week_current }} de grossesse
+                                        </h6>
+                                        <p class="mb-1">Vous êtes dans votre {{ trimester }}ème trimestre</p>
+                                        <small class="text-muted">
+                                            <i class="fas fa-chart-line me-1"></i>
+                                            Progression : {{ "%.1f"|format((week_current / 40) * 100) }}%
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="badge bg-success">{{ week_current }} SA</span>
+                                        <small class="d-block mt-1 text-muted">
+                                            <i class="fas fa-calendar me-1"></i>
+                                            {% if pregnancy.due_date is string %}
+                                                {{ pregnancy.due_date[:10] }}
+                                            {% else %}
+                                                {{ pregnancy.due_date.strftime('%d/%m/%Y') }}
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Notification des prochaines étapes -->
+                            {% set milestones = [
+                                (12, "Échographie de datation"),
+                                (22, "Échographie morphologique"),
+                                (32, "Dernière échographie"),
+                                (36, "Consultation pré-anesthésique"),
+                                (40, "Terme prévu")
+                            ] %}
+                            
+                            {% for milestone_week, milestone_text in milestones %}
+                                {% if milestone_week > week_current and milestone_week <= week_current + 4 %}
+                                <div class="list-group-item list-group-item-action notification-item notification-info"
+                                     onclick="showMilestoneDetails({{ milestone_week }})">
+                                    <div class="d-flex w-100 justify-content-between align-items-start">
+                                        <div class="me-3">
+                                            <i class="fas fa-flag fa-lg text-info"></i>
+                                        </div>
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">
+                                                <i class="fas fa-calendar-check me-1"></i>
+                                                Étape à venir
+                                            </h6>
+                                            <p class="mb-1">{{ milestone_text }}</p>
+                                            <small class="text-muted">
+                                                <i class="fas fa-hourglass-half me-1"></i>
+                                                Semaine {{ milestone_week }} 
+                                                (dans {{ milestone_week - week_current }} semaine{{ 's' if milestone_week - week_current > 1 else '' }})
+                                            </small>
+                                        </div>
+                                        <button class="btn btn-sm btn-outline-info"
+                                                onclick="event.stopPropagation(); setReminder('{{ milestone_text }}', {{ milestone_week }})">
+                                            <i class="fas fa-bell"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% else %}
+                        <!-- Aucune notification -->
+                        <div class="text-center py-5 text-muted">
+                            <i class="fas fa-bell-slash fa-3x mb-3"></i>
+                            <h5>Aucune notification</h5>
+                            <p class="mb-0">Tout semble être à jour !</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="javascript:void(0)" class="text-decoration-none small" onclick="loadMoreNotifications()">
+                        <i class="fas fa-history me-1"></i>
+                        Voir les anciennes notifications
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    {% endif %}
 
+    <!-- DEUX CARTES CÔTE À CÔTE -->
     <div class="row g-4">
-        <!-- Carte Grossesse -->
-        {% if pregnancy %}
+        <!-- Carte Grossesse - Colonne de gauche -->
         <div class="col-lg-6">
-            <div class="card h-100">
+            {% if pregnancy %}
+            <div class="card h-100 dashboard-card">
                 <div class="card-header bg-success text-white">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-baby me-2"></i>Suivi Grossesse
-                    </h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-baby me-2"></i>Suivi Grossesse
+                        </h5>
+                        <button class="btn btn-sm btn-light" onclick="sendWeekNotification()">
+                            <i class="fas fa-bell me-1"></i>Rappel
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-4">
                         <div class="pregnancy-progress mb-3">
-                            <div class="progress" style="height: 20px;">
-                                <!-- 🔥 CORRECTION : Utiliser week_current du contexte -->
-                                <div class="progress-bar bg-success" 
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-success progress-bar-striped" 
                                      style="width: {{ (week_current / 40) * 100 }}%">
                                     {{ week_current }}/40 semaines
                                 </div>
                             </div>
                         </div>
-                        <h3 class="text-success">{{ week_current }} SA</h3>
+                        <h2 class="text-success fw-bold">{{ week_current }} SA</h2>
                         <p class="text-muted">
-                            <!-- 🔥 CORRECTION : Utiliser trimester du contexte -->
-                            {{ trimester }}ème trimestre
+                            <span class="badge bg-{{ 'success' if trimester == 1 else 'warning' if trimester == 2 else 'danger' }}">
+                                {{ trimester }}ème trimestre
+                            </span>
                         </p>
+                        
+                        <!-- Dates importantes -->
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <i class="fas fa-calendar-plus fa-lg text-info mb-2"></i>
+                                    <h6>Début</h6>
+                                    <p class="mb-0 fw-bold small">
+                                        {% if pregnancy.start_date is string %}
+                                            {{ pregnancy.start_date[:10] }}
+                                        {% else %}
+                                            {{ pregnancy.start_date.strftime('%d/%m/%Y') }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-center">
+                                    <i class="fas fa-baby fa-lg text-warning mb-2"></i>
+                                    <h6>Terme prévu</h6>
+                                    <p class="mb-0 fw-bold small">
+                                        {% if pregnancy.due_date is string %}
+                                            {{ pregnancy.due_date[:10] }}
+                                        {% else %}
+                                            {{ pregnancy.due_date.strftime('%d/%m/%Y') }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Compte à rebours -->
+                        <div class="mt-4 pt-3 border-top">
+                            <h6><i class="fas fa-hourglass-end me-1"></i> Temps restant :</h6>
+                            <div id="pregnancyCountdown" class="text-success fw-bold h5">
+                                Calcul en cours...
+                            </div>
+                        </div>
                     </div>
                     
-                    <div class="pregnancy-info">
-                        <div class="row text-center">
-                            <div class="col-6">
-                                <small class="text-muted">Début</small>
-                                <p class="mb-0 fw-bold">
-                                    <!-- CORRECTION : Gestion des dates MongoDB -->
-                                    {% if pregnancy.start_date is string %}
-                                        {{ pregnancy.start_date[:10] }}
-                                    {% else %}
-                                        {{ pregnancy.start_date.strftime('%d/%m/%Y') }}
-                                    {% endif %}
-                                </p>
-                            </div>
-                            <div class="col-6">
-                                <small class="text-muted">Terme prévu</small>
-                                <p class="mb-0 fw-bold">
-                                    <!-- CORRECTION : Gestion des dates MongoDB -->
-                                    {% if pregnancy.due_date is string %}
-                                        {{ pregnancy.due_date[:10] }}
-                                    {% else %}
-                                        {{ pregnancy.due_date.strftime('%d/%m/%Y') }}
-                                    {% endif %}
-                                </p>
-                            </div>
+                    <!-- Rappels configurés -->
+                    <div class="mt-4 pt-3 border-top">
+                        <h6><i class="fas fa-bell me-1"></i> Rappels activés :</h6>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="weeklyReminders" checked>
+                            <label class="form-check-label small" for="weeklyReminders">
+                                Rappel hebdomadaire
+                            </label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="milestoneReminders" checked>
+                            <label class="form-check-label small" for="milestoneReminders">
+                                Rappel des étapes
+                            </label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="appointmentReminders">
+                            <label class="form-check-label small" for="appointmentReminders">
+                                Rappel des RDV
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -106,27 +304,26 @@
                     </a>
                 </div>
             </div>
-        </div>
-        {% else %}
-        <div class="col-lg-6">
-            <div class="card h-100">
+            {% else %}
+            <!-- Version sans grossesse -->
+            <div class="card h-100 dashboard-card">
                 <div class="card-body text-center d-flex flex-column justify-content-center">
-                    <i class="fas fa-baby-carriage fa-3x text-muted mb-3"></i>
-                    <h5>Suivi Grossesse</h5>
-                    <p class="text-muted mb-3">
-                        Ajoutez votre grossesse pour un suivi personnalisé
+                    <i class="fas fa-baby-carriage fa-4x text-muted mb-4"></i>
+                    <h4 class="text-muted mb-3">Aucune grossesse enregistrée</h4>
+                    <p class="text-muted mb-4">
+                        Ajoutez votre grossesse pour un suivi personnalisé semaine par semaine
                     </p>
-                    <a href="{{ url_for('pregnancy_tracker') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-1"></i>Ajouter une grossesse
+                    <a href="{{ url_for('pregnancy_tracker') }}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus me-2"></i>Ajouter une grossesse
                     </a>
                 </div>
             </div>
+            {% endif %}
         </div>
-        {% endif %}
 
-        <!-- Dernières Consultations -->
+        <!-- Carte Dernières Consultations - Colonne de droite -->
         <div class="col-lg-6">
-            <div class="card h-100">
+            <div class="card h-100 dashboard-card">
                 <div class="card-header bg-info text-white">
                     <h5 class="card-title mb-0">
                         <i class="fas fa-comments me-2"></i>Dernières Consultations
@@ -135,11 +332,10 @@
                 <div class="card-body">
                     {% if consultations %}
                     <div class="consultations-timeline">
-                        {% for consult in consultations %}
+                        {% for consult in consultations[:5] %}
                         <div class="consultation-item mb-3 pb-3 border-bottom">
-                            <div class="d-flex justify-content-between align-items-start mb-1">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
                                 <small class="text-muted">
-                                    <!-- CORRECTION : Gestion des dates MongoDB -->
                                     {% if consult.date_consultation is string %}
                                         {{ consult.date_consultation[:16]|replace('T', ' ') }}
                                     {% else %}
@@ -147,61 +343,90 @@
                                     {% endif %}
                                 </small>
                                 <span class="badge bg-{{ 'danger' if consult.urgency == 'high' else 'warning' if consult.urgency == 'medium' else 'info' }}">
-                                    {{ consult.urgency }}
+                                    {{ consult.urgency|capitalize }}
                                 </span>
                             </div>
-                            <p class="mb-1 fw-bold">{{ consult.question }}</p>
-                            <p class="mb-0 small text-muted">{{ consult.response[:100] }}...</p>
+                            <p class="mb-2 fw-bold">
+                                <i class="fas fa-question-circle me-1 text-primary"></i>
+                                {{ consult.question|truncate(100) }}
+                            </p>
+                            <p class="mb-0 small text-muted">
+                                <i class="fas fa-comment-dots me-1"></i>
+                                {{ consult.response|truncate(120) }}
+                            </p>
                         </div>
                         {% endfor %}
                     </div>
                     {% else %}
-                    <div class="text-center text-muted py-4">
-                        <i class="fas fa-inbox fa-2x mb-2"></i>
-                        <p>Aucune consultation récente</p>
+                    <div class="text-center text-muted py-5">
+                        <i class="fas fa-inbox fa-3x mb-3"></i>
+                        <h5>Aucune consultation récente</h5>
+                        <p class="mb-3">Commencez une conversation avec l'assistant !</p>
+                        <a href="{{ url_for('chat') }}" class="btn btn-primary">
+                            <i class="fas fa-robot me-1"></i>Nouvelle consultation
+                        </a>
                     </div>
                     {% endif %}
                 </div>
                 <div class="card-footer">
-                    <a href="{{ url_for('chat') }}" class="btn btn-outline-info btn-sm">
+                    <a href="{{ url_for('chat') }}" class="btn btn-outline-info btn-sm me-2">
                         <i class="fas fa-robot me-1"></i>Nouvelle consultation
                     </a>
+                    {% if consultations %}
+                    <a href="javascript:void(0)" class="btn btn-outline-secondary btn-sm" onclick="showAllConsultations()">
+                        <i class="fas fa-history me-1"></i>Tout voir
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Statistiques Rapides -->
-    <div class="row mt-4">
+    <!-- Statistiques Rapides (4 cartes en bas) -->
+    <div class="row mt-4 g-4">
         <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3 class="text-primary">{{ consultations|length }}</h3>
+            <div class="stat-card card h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-comment-medical fa-2x text-primary"></i>
+                    </div>
+                    <h3 class="text-primary fw-bold">{{ consultations|length }}</h3>
                     <p class="text-muted mb-0">Consultations</p>
                 </div>
             </div>
         </div>
+        
         <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <!-- 🔥 CORRECTION : Utiliser week_current du contexte -->
-                    <h3 class="text-success">{{ week_current }}</h3>
+            <div class="stat-card card h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-baby-carriage fa-2x text-success"></i>
+                    </div>
+                    <h3 class="text-success fw-bold">{{ week_current if pregnancy else 0 }}</h3>
                     <p class="text-muted mb-0">Semaines</p>
                 </div>
             </div>
         </div>
+        
         <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3 class="text-warning">{{ vaccine_reminders|length }}</h3>
+            <div class="stat-card card h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-syringe fa-2x text-warning"></i>
+                    </div>
+                    <h3 class="text-warning fw-bold">{{ vaccine_reminders|length }}</h3>
                     <p class="text-muted mb-0">Rappels</p>
                 </div>
             </div>
         </div>
+        
         <div class="col-md-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h3 class="text-info">
+            <div class="stat-card card h-100">
+                <div class="card-body text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-exclamation-triangle fa-2x text-danger"></i>
+                    </div>
+                    <h3 class="text-danger fw-bold">
                         {{ consultations|selectattr('urgency', 'equalto', 'high')|list|length }}
                     </h3>
                     <p class="text-muted mb-0">Alertes</p>
@@ -210,4 +435,430 @@
         </div>
     </div>
 </div>
+
+<!-- Modal pour les détails des vaccins -->
+<div class="modal fade" id="vaccineDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-syringe me-2"></i>
+                    Détails du vaccin
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="vaccineDetailsContent">
+                <!-- Les détails seront chargés dynamiquement -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" onclick="scheduleVaccine()">
+                    <i class="fas fa-calendar-plus me-1"></i>Planifier un rappel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour les infos d'urgence -->
+<div class="modal fade" id="emergencyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Informations d'Urgence
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <h6><i class="fas fa-phone-alt me-2"></i>Numéros d'urgence :</h6>
+                    <ul class="mb-0">
+                        <li><strong>15</strong> - SAMU (urgences médicales)</li>
+                        <li><strong>112</strong> - Numéro d'urgence européen</li>
+                        <li><strong>18</strong> - Pompiers</li>
+                        <li><strong>114</strong> - Urgences sourds et malentendants</li>
+                    </ul>
+                </div>
+                <div class="alert alert-warning">
+                    <h6><i class="fas fa-hospital me-2"></i>Symptômes nécessitant une consultation immédiate :</h6>
+                    <ul class="mb-0 small">
+                        <li>Saignements vaginaux abondants</li>
+                        <li>Perte de liquide amniotique</li>
+                        <li>Contractions régulières avant terme</li>
+                        <li>Absence de mouvements du bébé</li>
+                        <li>Fortes douleurs abdominales</li>
+                        <li>Maux de tête intenses avec troubles visuels</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="callEmergency('15')">
+                    <i class="fas fa-phone me-1"></i>Appeler le 15
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+class NotificationSystem {
+    constructor() {
+        this.notifications = [];
+        this.unreadCount = 0;
+        this.init();
+    }
+
+    async init() {
+        await this.loadNotifications();
+        this.setupEventListeners();
+        this.startRealTimeUpdates();
+    }
+
+    async loadNotifications() {
+        try {
+            const response = await fetch('/api/notifications');
+            if (response.ok) {
+                const data = await response.json();
+                this.notifications = data.notifications || [];
+                this.unreadCount = data.unread_count || 0;
+                this.updateNotificationBadge();
+            }
+        } catch (error) {
+            console.error('Erreur chargement notifications:', error);
+        }
+    }
+
+    setupEventListeners() {
+        // Gestion des switch de notifications
+        document.getElementById('weeklyReminders')?.addEventListener('change', (e) => {
+            this.updateNotificationSettings('weekly', e.target.checked);
+        });
+
+        document.getElementById('milestoneReminders')?.addEventListener('change', (e) => {
+            this.updateNotificationSettings('milestone', e.target.checked);
+        });
+
+        document.getElementById('appointmentReminders')?.addEventListener('change', (e) => {
+            this.updateNotificationSettings('appointment', e.target.checked);
+        });
+
+        // Rafraîchissement automatique toutes les 5 minutes
+        setInterval(() => this.loadNotifications(), 5 * 60 * 1000);
+    }
+
+    startRealTimeUpdates() {
+        // Simuler des mises à jour en temps réel
+        setInterval(() => {
+            this.checkForNewNotifications();
+        }, 30000);
+    }
+
+    async checkForNewNotifications() {
+    try {
+        const lastCheck = localStorage.getItem('lastNotificationCheck') || 
+                         new Date(Date.now() - 24*60*60*1000).toISOString();
+        
+        const response = await fetch(`/api/notifications/check?last_check=${encodeURIComponent(lastCheck)}`);
+        
+        if (response.ok) {
+            const data = await response.json();
+            if (data.has_new) {
+                this.showNewNotification(data.new_notification);
+                // Mettre à jour le timestamp
+                localStorage.setItem('lastNotificationCheck', new Date().toISOString());
+            }
+        }
+    } catch (error) {
+        console.error('Erreur vérification notifications:', error);
+    }
+   }
+
+    showNewNotification(notification) {
+        const toast = document.createElement('div');
+        toast.className = 'toast notification-toast align-items-center text-white bg-primary border-0';
+        toast.setAttribute('role', 'alert');
+        
+        const icon = notification.type === 'vaccine' ? 'fa-syringe' : 
+                     notification.type === 'emergency' ? 'fa-exclamation-triangle' : 
+                     notification.type === 'pregnancy' ? 'fa-baby-carriage' : 'fa-bell';
+        
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas ${icon} me-2"></i>
+                    <strong>${notification.title}</strong><br>
+                    <small>${notification.message}</small>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+        
+        const toastContainer = document.getElementById('toastContainer') || this.createToastContainer();
+        toastContainer.appendChild(toast);
+        
+        const bsToast = new bootstrap.Toast(toast, { delay: 5000 });
+        bsToast.show();
+        
+        this.playNotificationSound();
+        this.unreadCount++;
+        this.updateNotificationBadge();
+    }
+
+    createToastContainer() {
+        const container = document.createElement('div');
+        container.id = 'toastContainer';
+        container.className = 'toast-container position-fixed top-0 end-0 p-3';
+        container.style.zIndex = '1060';
+        document.body.appendChild(container);
+        return container;
+    }
+
+    playNotificationSound() {
+        try {
+            const audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEAQB8AAEAfAAABAAgAZGF0YQ');
+            audio.volume = 0.3;
+            audio.play().catch(() => {});
+        } catch (e) {
+            console.log('Sound notification skipped');
+        }
+    }
+
+    async updateNotificationSettings(type, enabled) {
+        try {
+            await fetch('/api/notifications/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type, enabled })
+            });
+            
+            this.showToast(
+                'Paramètres mis à jour',
+                `Les notifications ${type} sont maintenant ${enabled ? 'activées' : 'désactivées'}`,
+                'success'
+            );
+        } catch (error) {
+            console.error('Erreur mise à jour paramètres:', error);
+        }
+    }
+
+    async markAllAsRead() {
+        try {
+            await fetch('/api/notifications/read-all', {
+                method: 'POST'
+            });
+            
+            this.unreadCount = 0;
+            this.updateNotificationBadge();
+            
+            this.showToast('Notifications marquées comme lues', '', 'success');
+        } catch (error) {
+            console.error('Erreur marquage tout comme lu:', error);
+        }
+    }
+
+    updateNotificationBadge() {
+        const badge = document.getElementById('notificationBadge') || this.createNotificationBadge();
+        badge.textContent = this.unreadCount;
+        badge.style.display = this.unreadCount > 0 ? 'inline-block' : 'none';
+    }
+
+    createNotificationBadge() {
+        const navItem = document.querySelector('.nav-item .dropdown-toggle');
+        if (navItem) {
+            const badge = document.createElement('span');
+            badge.id = 'notificationBadge';
+            badge.className = 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger';
+            badge.style.display = 'none';
+            navItem.parentElement.style.position = 'relative';
+            navItem.parentElement.appendChild(badge);
+            return badge;
+        }
+        return null;
+    }
+
+    showVaccineDetails(notificationItem) {
+        const childName = notificationItem.querySelector('h6').textContent.split(' - ')[0];
+        const vaccines = notificationItem.querySelector('p').textContent;
+        const status = notificationItem.classList.contains('notification-urgent') ? 'urgent' : 'warning';
+        
+        const modalContent = `
+            <div class="vaccine-details">
+                <h6><i class="fas fa-baby me-2"></i> ${childName}</h6>
+                <div class="alert alert-${status === 'urgent' ? 'danger' : 'warning'}">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Action ${status === 'urgent' ? 'requise' : 'recommandée'} :</strong>
+                    <p class="mb-0 mt-2">${vaccines}</p>
+                </div>
+                <div class="mt-3">
+                    <h6><i class="fas fa-info-circle me-2"></i> Informations importantes :</h6>
+                    <ul class="small">
+                        <li>Prenez rendez-vous avec votre pédiatre</li>
+                        <li>Apportez le carnet de santé de l'enfant</li>
+                        <li>Signalez toute réaction allergique</li>
+                        <li>Notez la date du vaccin dans l'application</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        
+        document.getElementById('vaccineDetailsContent').innerHTML = modalContent;
+        const modal = new bootstrap.Modal(document.getElementById('vaccineDetailsModal'));
+        modal.show();
+    }
+
+    showEmergencyInfo() {
+        const modal = new bootstrap.Modal(document.getElementById('emergencyModal'));
+        modal.show();
+    }
+
+    showPregnancyProgress() {
+        window.location.href = '/pregnancy_tracker';
+    }
+
+    showToast(title, message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `toast align-items-center text-white bg-${type} border-0`;
+        toast.setAttribute('role', 'alert');
+        
+        toast.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    <strong>${title}</strong><br>
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        `;
+        
+        const container = document.getElementById('toastContainer') || this.createToastContainer();
+        container.appendChild(toast);
+        
+        const bsToast = new bootstrap.Toast(toast, { delay: 3000 });
+        bsToast.show();
+    }
+}
+
+// Fonctions globales
+function refreshNotifications() {
+    if (window.notificationSystem) {
+        window.notificationSystem.loadNotifications();
+        window.notificationSystem.showToast('Actualisation', 'Notifications mises à jour', 'info');
+    }
+}
+
+function markAllAsRead() {
+    if (window.notificationSystem) {
+        window.notificationSystem.markAllAsRead();
+    }
+}
+
+function showEmergencyInfo() {
+    if (window.notificationSystem) {
+        window.notificationSystem.showEmergencyInfo();
+    }
+}
+
+function callEmergency(number) {
+    if (confirm(`Composer le ${number} ?`)) {
+        window.location.href = `tel:${number}`;
+    }
+}
+
+function sendWeekNotification() {
+    const week = {{ week_current if pregnancy else 0 }};
+    if (week > 0) {
+        fetch('/api/notifications/weekly', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ week: week })
+        })
+        .then(() => {
+            alert(`Notification envoyée pour la semaine ${week}`);
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de l\'envoi de la notification');
+        });
+    }
+}
+
+function showAllConsultations() {
+    window.location.href = '/chat?history=true';
+}
+
+function showVaccineDetails(reminderData) {
+    // À implémenter selon votre structure de données
+    console.log('Détails vaccin:', reminderData);
+}
+
+function showConsultationDetails(consultId) {
+    // À implémenter pour afficher les détails d'une consultation
+    console.log('Détails consultation:', consultId);
+}
+
+function showMilestoneDetails(week) {
+    alert(`Détails de l'étape semaine ${week}`);
+}
+
+function setReminder(text, week) {
+    if (confirm(`Définir un rappel pour "${text}" (semaine ${week}) ?`)) {
+        // Implémenter la logique de rappel
+        console.log('Rappel défini:', text, week);
+    }
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    window.notificationSystem = new NotificationSystem();
+    
+    // Calcul du compte à rebours de grossesse
+    updatePregnancyCountdown();
+    setInterval(updatePregnancyCountdown, 60000);
+});
+
+function updatePregnancyCountdown() {
+    const dueDateStr = '{{ pregnancy.due_date if pregnancy else "" }}';
+    if (!dueDateStr) return;
+    
+    let dueDate;
+    try {
+        if (typeof dueDateStr === 'string') {
+            dueDate = new Date(dueDateStr);
+        } else {
+            dueDate = new Date(dueDateStr);
+        }
+        
+        const now = new Date();
+        const diff = dueDate - now;
+        
+        if (diff > 0) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const weeks = Math.floor(days / 7);
+            const remainingDays = days % 7;
+            
+            const countdownText = weeks > 0 ? 
+                `${weeks} semaine${weeks > 1 ? 's' : ''} et ${remainingDays} jour${remainingDays > 1 ? 's' : ''}` :
+                `${days} jour${days > 1 ? 's' : ''}`;
+            
+            const countdownElement = document.getElementById('pregnancyCountdown');
+            if (countdownElement) {
+                countdownElement.textContent = countdownText;
+            }
+        } else {
+            const countdownElement = document.getElementById('pregnancyCountdown');
+            if (countdownElement) {
+                countdownElement.textContent = 'Terme dépassé';
+                countdownElement.classList.add('text-danger');
+            }
+        }
+    } catch (error) {
+        console.error('Erreur calcul compte à rebours:', error);
+    }
+}
+</script>
 {% endblock %}

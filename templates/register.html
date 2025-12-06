@@ -1,0 +1,397 @@
+{% extends "layout.html" %}
+
+{% block title %}Inscription - Maman & Bébé{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="mb-2">
+                        <i class="fas fa-user-plus me-2"></i>
+                        Créer votre compte
+                    </h2>
+                    <p class="mb-0 opacity-75">Remplissez vos informations pour un accompagnement personnalisé</p>
+                </div>
+                
+                <div class="card-body p-4 p-md-5">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show mb-4">
+                                    <i class="fas fa-{{ 'exclamation-triangle' if category == 'error' else 'info-circle' }} me-2"></i>
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <form method="POST" action="{{ url_for('register') }}" id="registerForm" novalidate>
+                        <!-- Informations de connexion -->
+                        <div class="mb-5">
+                            <h4 class="border-bottom pb-2 mb-4">
+                                <i class="fas fa-key me-2 text-primary"></i>
+                                Informations de connexion
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="prenom" class="form-label fw-semibold">
+                                        <i class="fas fa-user me-2 text-primary"></i>
+                                        Prénom *
+                                    </label>
+                                    <input type="text" class="form-control" id="prenom" name="prenom" required>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="nom" class="form-label fw-semibold">
+                                        <i class="fas fa-user me-2 text-primary"></i>
+                                        Nom
+                                    </label>
+                                    <input type="text" class="form-control" id="nom" name="nom">
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label fw-semibold">
+                                        <i class="fas fa-envelope me-2 text-primary"></i>
+                                        Email *
+                                    </label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label fw-semibold">
+                                        <i class="fas fa-phone me-2 text-primary"></i>
+                                        Téléphone *
+                                    </label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3 mt-3">
+                                <div class="col-md-6">
+                                    <label for="password" class="form-label fw-semibold">
+                                        <i class="fas fa-lock me-2 text-primary"></i>
+                                        Mot de passe *
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password" required minlength="8">
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="form-text">
+                                        Minimum 8 caractères
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <label for="confirm_password" class="form-label fw-semibold">
+                                        <i class="fas fa-lock me-2 text-primary"></i>
+                                        Confirmer le mot de passe *
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Informations personnelles -->
+                        <div class="mb-5">
+                            <h4 class="border-bottom pb-2 mb-4">
+                                <i class="fas fa-user-circle me-2 text-primary"></i>
+                                Informations personnelles
+                            </h4>
+                            
+                            <div class="row g-3">
+                                
+                            </div>
+                        </div>
+
+                        <!-- Situation actuelle -->
+                        <div class="mb-5">
+                            <h4 class="border-bottom pb-2 mb-4">
+                                <i class="fas fa-baby me-2 text-success"></i>
+                                Votre Situation
+                            </h4>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Je suis : *</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="statut" 
+                                           id="enceinte" value="enceinte" checked>
+                                    <label class="form-check-label" for="enceinte">
+                                        <i class="fas fa-baby-carriage me-1"></i>
+                                        Femme enceinte
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="statut" 
+                                           id="jeune_mere" value="jeune_mere">
+                                    <label class="form-check-label" for="jeune_mere">
+                                        <i class="fas fa-baby me-1"></i>
+                                        Jeune maman
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="statut" 
+                                           id="les_deux" value="les_deux">
+                                    <label class="form-check-label" for="les_deux">
+                                        <i class="fas fa-baby me-1"></i>
+                                        Enceinte et déjà maman
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Informations médicales -->
+                        <div class="mb-5">
+                            <h4 class="border-bottom pb-2 mb-4">
+                                <i class="fas fa-heartbeat me-2 text-danger"></i>
+                                Informations Médicales
+                            </h4>
+                            
+                            <div class="mb-3">
+                                <label for="allergies" class="form-label fw-semibold">Allergies connues</label>
+                                <textarea class="form-control" id="allergies" name="allergies" rows="2" 
+                                          placeholder="Pénicilline, aspirine, aliments..."></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="traitements" class="form-label fw-semibold">Traitements en cours</label>
+                                <textarea class="form-control" id="traitements" name="traitements" rows="2" 
+                                          placeholder="Médicaments, suppléments..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Informations de grossesse (si enceinte) -->
+                        <div class="mb-5" id="pregnancySection">
+                            <h4 class="border-bottom pb-2 mb-4">
+                                <i class="fas fa-baby-carriage me-2 text-success"></i>
+                                Informations sur la grossesse
+                            </h4>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="start_date" class="form-label fw-semibold">
+                                        Date de début de grossesse
+                                    </label>
+                                    <input type="date" class="form-control" id="start_date" name="start_date">
+                                    <div class="form-text">
+                                        Date du premier jour des dernières règles
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- Enfants (si jeune maman ou les deux) -->
+                        <div class="mb-5 d-none" id="childrenSection">
+                            <h4 class="border-bottom pb-2 mb-4">
+                                <i class="fas fa-child me-2 text-info"></i>
+                                Informations sur vos enfants
+                            </h4>
+                            
+                            <div id="childrenList"></div>
+                            
+                            <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="addChildBtn">
+                                <i class="fas fa-plus me-1"></i>
+                                Ajouter un enfant
+                            </button>
+                        </div>
+
+                        <!-- Conditions -->
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    J'accepte les 
+                                    <a href="#" class="text-decoration-none">conditions d'utilisation</a> 
+                                    et la 
+                                    <a href="#" class="text-decoration-none">politique de confidentialité</a> *
+                                </label>
+                            </div>
+                            
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" id="newsletter" name="newsletter" checked>
+                                <label class="form-check-label" for="newsletter">
+                                    Je souhaite recevoir des conseils et informations sur la maternité
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>
+                                Créer mon compte et enregistrer mon profil
+                            </button>
+                            
+                            <div class="text-center mt-3">
+                                <p class="text-muted mb-0">
+                                    Déjà un compte ? 
+                                    <a href="{{ url_for('login') }}" class="text-decoration-none fw-semibold">
+                                        Connectez-vous ici
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Basculer la visibilité du mot de passe
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm_password');
+    
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+    
+    toggleConfirmPassword.addEventListener('click', function() {
+        const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        confirmPasswordInput.setAttribute('type', type);
+        this.querySelector('i').classList.toggle('fa-eye');
+        this.querySelector('i').classList.toggle('fa-eye-slash');
+    });
+    
+    // Gérer l'affichage des sections selon la situation
+    const statutRadios = document.querySelectorAll('input[name="statut"]');
+    const pregnancySection = document.getElementById('pregnancySection');
+    const childrenSection = document.getElementById('childrenSection');
+    const addChildBtn = document.getElementById('addChildBtn');
+    const childrenList = document.getElementById('childrenList');
+    let childCount = 0;
+    
+    function updateSections() {
+        const selectedStatut = document.querySelector('input[name="statut"]:checked').value;
+        
+        // Afficher/masquer la section grossesse
+        if (selectedStatut === 'enceinte' || selectedStatut === 'les_deux') {
+            pregnancySection.style.display = 'block';
+        } else {
+            pregnancySection.style.display = 'none';
+        }
+        
+        // Afficher/masquer la section enfants
+        if (selectedStatut === 'jeune_mere' || selectedStatut === 'les_deux') {
+            childrenSection.classList.remove('d-none');
+            if (childCount === 0) {
+                addChildField(); // Ajouter un champ enfant par défaut
+            }
+        } else {
+            childrenSection.classList.add('d-none');
+        }
+    }
+    
+    // Écouter les changements de statut
+    statutRadios.forEach(radio => {
+        radio.addEventListener('change', updateSections);
+    });
+    
+    // Fonction pour ajouter un champ enfant
+    function addChildField() {
+        childCount++;
+        const childHtml = `
+            <div class="child-field border p-3 mb-3 rounded" data-child-index="${childCount}">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Enfant ${childCount}</h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-child-btn" 
+                            ${childCount === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <label class="form-label small">Prénom</label>
+                        <input type="text" class="form-control form-control-sm child-name" 
+                               name="children[${childCount}][name]" placeholder="Prénom">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label small">Date de naissance</label>
+                        <input type="date" class="form-control form-control-sm child-birth-date" 
+                               name="children[${childCount}][birth_date]">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small">Sexe</label>
+                        <select class="form-select form-select-sm child-gender" 
+                                name="children[${childCount}][gender]">
+                            <option value="">--</option>
+                            <option value="F">Fille</option>
+                            <option value="M">Garçon</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        childrenList.insertAdjacentHTML('beforeend', childHtml);
+        
+        // Ajouter l'écouteur pour le bouton de suppression
+        const removeBtn = childrenList.querySelector(`.child-field[data-child-index="${childCount}"] .remove-child-btn`);
+        removeBtn.addEventListener('click', function() {
+            if (childCount > 1) {
+                this.closest('.child-field').remove();
+                childCount--;
+                updateRemoveButtons();
+            }
+        });
+        
+        updateRemoveButtons();
+    }
+    
+    function updateRemoveButtons() {
+        const removeBtns = document.querySelectorAll('.remove-child-btn');
+        removeBtns.forEach(btn => {
+            btn.disabled = childCount === 1;
+        });
+    }
+    
+    // Bouton pour ajouter un enfant
+    addChildBtn.addEventListener('click', addChildField);
+    
+    // Initialiser les sections
+    updateSections();
+    
+    // Validation du formulaire
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', function(e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        form.classList.add('was-validated');
+        
+        // Vérifier la correspondance des mots de passe
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            e.preventDefault();
+            confirmPasswordInput.classList.add('is-invalid');
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.textContent = 'Les mots de passe ne correspondent pas';
+            confirmPasswordInput.parentNode.appendChild(feedback);
+        }
+    });
+});
+</script>
+{% endblock %}

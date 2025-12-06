@@ -1,150 +1,124 @@
 {
+  "dataset_info": {
+    "nom": "Dataset Santé Maternelle et Infantile - Version Unifiée",
+    "version": "2.0.0",
+    "langue": "français",
+    "format": "hybrid",
+    "total_intents": 50,
+    "date_creation": "2024-11-14",
+    "sources": ["OMS/WHO", "UNICEF", "Forums médicaux", "Retours utilisateurs"],
+    "contexte": "Afrique de l'Ouest / Burkina Faso",
+    "disclaimer": "Informations à but éducatif uniquement. Consultez un professionnel de santé."
+  },
+  
   "intents": [
     {
-      "tag": "forum_questions_courantes",
+      "tag": "salutation",
       "patterns": [
-        "tiraillements bas ventre normal",
-        "pertes blanches grossesse", 
-        "brûlures estomac femme enceinte",
-        "envie fréquente uriner normal",
-        "gorge sèche grossesse",
-        "rêves bizarres grossesse",
-        "nez bouché femme enceinte",
-        "jambes sans repos grossesse",
-        "bas ventre qui pulse"
+        "bonjour",
+        "salut",
+        "coucou",
+        "hello",
+        "bonsoir",
+        "hey",
+        "cc",
+        "yo"
       ],
       "responses": [
-        "SYMPTÔMES COURANTS (souvent normaux) :\n• Tiraillements : ligaments qui s'étirent\n• Pertes blanches : hormonales, consulter si odeur/démangeaisons\n• Brûlures estomac : reflux, repas légers\n• Rêves étranges : hormonaux + anxiété\n⚠️ TOUJOURS : Signaler tout symptôme gênant à votre professionnel de santé"
-      ]
+        "Bonjour ! 👋 Je suis ravie de vous accompagner sur votre santé maternelle et infantile. Comment puis-je vous aider aujourd'hui ?",
+        "Salut ! Bienvenue sur votre assistant santé. Posez-moi vos questions sur la grossesse, les soins du bébé ou les vaccinations ! 😊",
+        "Bonjour ! Je suis là pour répondre à toutes vos questions de santé maternelle. Que souhaitez-vous savoir ?"
+      ],
+      "contexte": "general",
+      "priorite": "haute"
     },
+    
     {
-      "tag": "inquietudes_frequentes",
+      "tag": "grossesse_duree",
       "patterns": [
-        "bébé ne bouge pas beaucoup",
-        "bébé bouge trop",
-        "ventre petit grossesse",
-        "ventre gros grossesse",
-        "pas encore senti bébé bouger",
-        "mouvements bébé diminuent",
-        "bébé position siège",
-        "col utérin court risques"
+        "combien temps dure grossesse",
+        "durée grossesse",
+        "grossesse dure combien mois",
+        "9 mois grossesse",
+        "40 semaines grossesse",
+        "durée normale grossesse"
       ],
       "responses": [
-        "INQUIÉTUDES FRÉQUENTES :\n👶 MOUVEMENTS : Variables, compter à partir de 28 SA (10 mouvements/2h)\n🤰 TAILLE VENTRE : Très variable selon morphologie, position bébé\n🔄 POSITION : Bébé se retourne souvent jusqu'au 8ème mois\n⚠️ CONSULTER SI : Diminution soudaine mouvements, douleurs, saignements\n💬 CONSEIL : Notez vos questions pour la prochaine consultation"
-      ]
+        "Une grossesse normale dure environ **40 semaines (280 jours)** à partir du premier jour des dernières règles, soit environ **9 mois**.\n\n📅 **Dates importantes :**\n• Accouchement à terme : 37-42 semaines\n• Date prévue : 40 semaines (estimation)\n• Bébé à terme : dès 37 semaines\n\n💡 Seulement 5% des bébés naissent exactement à la date prévue !"
+      ],
+      "mots_cles": ["durée", "combien", "temps", "grossesse", "mois", "semaines"],
+      "intention": "grossesse_generale"
     },
+    
     {
-      "tag": "valise_maternite",
+      "tag": "signes_grossesse",
       "patterns": [
-        "quoi mettre valise maternité",
-        "valise accouchement quand préparer",
-        "liste affaires maternité",
-        "valise bébé maternité",
-        "valise papa accouchement",
-        "documents maternité",
-        "quand préparer valise grossesse",
-        "checklist valise maternité"
+        "comment savoir si enceinte",
+        "signes grossesse",
+        "symptômes début grossesse",
+        "reconnaître grossesse",
+        "indices grossesse",
+        "premiers signes enceinte",
+        "comment reconnaître grossesse"
       ],
       "responses": [
-        "VALISE MATERNITÉ :\n⏰ QUAND : À partir de 8 mois\n👩 POUR MAMAN : 2-3 nuits de vêtements confortables, produits toilette, soutiens-gorge allaitement, affaires retour\n👶 POUR BÉBÉ : Bodies, pyjamas, couches, brassières\n📄 DOCUMENTS : Carte vitale, pièce identité, carte groupe sanguin, dossier médical\n💡 CONSEIL : Une valise à la maison, une au coffre voiture"
-      ]
+        "🤰 **SIGNES DE GROSSESSE :**\n\n**Signes précoces (1-2 semaines) :**\n• Absence de règles (aménorrhée)\n• Seins tendus et sensibles\n• Nausées matinales\n• Fatigue intense\n• Envies fréquentes d'uriner\n• Saignements légers (nidation)\n\n**Signes tardifs :**\n• Ventre qui grossit\n• Mouvements du bébé (20 semaines)\n• Changements d'humeur\n\n✅ **CONFIRMATION :** Test de grossesse urinaire ou prise de sang (bêta-hCG)"
+      ],
+      "mots_cles": ["signes", "symptômes", "enceinte", "grossesse", "reconnaître"],
+      "intention": "grossesse_generale"
     },
+    
     {
-      "tag": "chambre_bebe_preparation",
+      "tag": "trimestre_1",
       "patterns": [
-        "quand préparer chambre bébé",
-        "liste naissance essentiel",
-        "lit bébé sécurité normes",
-        "matériel puériculture indispensable",
-        "chambre bébé aménagement",
-        "couffin ou lit cododo",
-        "table à langer nécessaire",
-        "poussette choisir"
+        "premier trimestre",
+        "3 premiers mois grossesse",
+        "début grossesse",
+        "semaines 1 à 13",
+        "que faire premier trimestre",
+        "conseils début grossesse"
       ],
       "responses": [
-        "CHAMBRE BÉBÉ :\n🏠 QUAND : Commencer vers 7 mois\n🛏️ LIT : Normes NF, barreaux <6.5cm, matelas ferme\n🚼 INDISPENSABLE : Couches, bodies, produits toilette, thermomètre\n👶 MATÉRIEL : Poussette, siège auto, table à langer optionnelle\n💡 CONSEIL : Liste de naissance pour éviter doublons, privilégier occasion pour certains articles"
-      ]
+        "📅 **PREMIER TRIMESTRE (semaines 1-13) :**\n\n**✅ À FAIRE :**\n• 1ère consultation avant 12 semaines\n• Prise d'acide folique (400-800 μg/jour)\n• Alimentation équilibrée\n• Repos suffisant\n• 1ère échographie à 12 SA\n\n**📋 EXAMENS :**\n• Prises de sang (groupe, toxo, rubéole, VIH, syphilis)\n• Dépistage trisomie 21 (optionnel)\n\n**❌ ÉVITER :**\n• Alcool et tabac (INTERDIT)\n• Médicaments non prescrits\n• Sports violents\n• Viandes/poissons crus\n\n**😊 SYMPTÔMES NORMAUX :**\nNausées, fatigue, seins sensibles - tout est normal !"
+      ],
+      "mots_cles": ["premier", "trimestre", "début", "1er", "premiers mois"],
+      "intention": "grossesse_generale"
     },
+    
     {
-      "tag": "vie_intime_grossesse",
+      "tag": "trimestre_2",
       "patterns": [
-        "rapports sexuels grossesse sécurité",
-        "positions sexuelles femme enceinte",
-        "désir sexuel grossesse",
-        "orgasme déclenche accouchement",
-        "saignements après rapports grossesse",
-        "trimestre rapports intimes",
-        "contractions après rapports",
-        "libido grossesse variations"
+        "deuxième trimestre",
+        "milieu grossesse",
+        "semaines 14 à 27",
+        "trimestre 2",
+        "4ème mois grossesse",
+        "bébé bouge quand"
       ],
       "responses": [
-        "VIE INTIME :\n❤️ RAPPORTS : Généralement sans danger sauf contre-indication médicale\n🛏️ POSITIONS : Côté, femme dessus, plus confortables\n📈 LIBIDO : Variable (↑ 2ème trimestre, ↓ 1er et 3ème)\n⚠️ ORGASME : Ne déclenche pas accouchement (sauf terme dépassé)\n🚨 CONSULTER : Si saignements, douleurs, pertes inhabituelles"
-      ]
+        "📅 **DEUXIÈME TRIMESTRE (semaines 14-27) :**\n\n**✨ PÉRIODE CONFORTABLE :**\n• Nausées diminuent\n• Énergie revient\n• Ventre s'arrondit joliment\n• Premiers mouvements bébé (18-20 semaines) 👶\n\n**✅ À FAIRE :**\n• Échographie morphologique à 22 SA (IMPORTANTE)\n• Test diabète gestationnel (24-28 semaines)\n• Déclaration de grossesse\n• Cours de préparation à la naissance\n• Activité physique douce\n\n**💡 CONSEILS :**\n• Profitez ! C'est souvent le meilleur trimestre\n• Commencez à penser valise maternité\n• Choisissez le prénom 😊"
+      ],
+      "mots_cles": ["deuxième", "2ème", "trimestre", "milieu", "mouvements"],
+      "intention": "grossesse_generale"
     },
+    
     {
-      "tag": "emotions_grossesse",
+      "tag": "trimestre_3",
       "patterns": [
-        "baby blues grossesse",
-        "émotions femme enceinte",
-        "pleurs grossesse normaux",
-        "stress grossesse effets bébé",
-        "anxiété grossesse",
-        "sautes humeur grossesse",
-        "dépression grossesse",
-        "bien-être mental grossesse"
+        "troisième trimestre",
+        "fin grossesse",
+        "derniers mois",
+        "semaines 28 à 40",
+        "préparation accouchement",
+        "trimestre 3"
       ],
       "responses": [
-        "ÉMOTIONS :\n😢 NORMAL : Sautes d'humeur, sensibilité, anxiété légère\n💙 BABY BLUES : Fréquent après accouchement, temporaire\n⚠️ DÉPRESSION : Si tristesse persistante, perte intérêt → consulter\n🧘 CONSEILS : Parler, repos, relaxation, groupes parole\n👩‍⚕️ AIDE : Sage-femme, psychologue périnatal, soutien proches"
-      ]
-    },
-    {
-      "tag": "medicaments_grossesse",
-      "patterns": [
-        "paracétamol grossesse autorisé",
-        "doliprane femme enceinte",
-        "médicaments interdits grossesse",
-        "rhume grossesse traitement",
-        "maux tête femme enceinte",
-        "antibiotiques grossesse",
-        "automédication grossesse danger",
-        "ordonnance femme enceinte"
+        "📅 **TROISIÈME TRIMESTRE (semaines 28-40) :**\n\n**✅ PRÉPARATIONS :**\n• Valise maternité prête (à partir 8 mois)\n• Chambre bébé aménagée\n• Cours de préparation accouchement\n• Projet de naissance rédigé\n\n**📋 EXAMENS :**\n• 3ème échographie à 32 SA\n• Consultations toutes les 2 semaines puis chaque semaine\n• Monitoring si nécessaire\n\n**😴 SYMPTÔMES COURANTS :**\n• Fatigue, essoufflement\n• Contractions de Braxton Hicks (fausses contractions)\n• Difficultés sommeil\n• Envies fréquentes d'uriner\n\n**🚨 SIGNES D'ALERTE ACCOUCHEMENT :**\n• Contractions régulières (toutes les 5-10 min)\n• Perte des eaux\n• Saignements\n→ DIRECTION MATERNITÉ !"
       ],
-      "responses": [
-        "MÉDICAMENTS :\n✅ AUTORISÉ SUR AVIS MÉDICAL : Paracétamol (Doliprane)\n❌ DANGEREUX : Anti-inflammatoires, certains antibiotiques, dérivés vitamine A\n⚠️ PRINCIPE : JAMAIS d'automédication ! Toujours consulter avant prise\n💡 CONSEIL : Liste des médicaments autorisés chez votre médecin/pharmacien"
-      ]
+      "mots_cles": ["troisième", "3ème", "trimestre", "fin", "derniers", "accouchement"],
+      "intention": "grossesse_generale"
     },
-    {
-      "tag": "beaute_soins_grossesse",
-      "patterns": [
-        "teinture cheveux femme enceinte",
-        "soins visage grossesse",
-        "épilation grossesse",
-        "crèmes vergetures efficaces",
-        "maquillage femme enceinte",
-        "produits beauté interdits grossesse",
-        "soins corps grossesse",
-        "rétinol grossesse danger"
-      ],
-      "responses": [
-        "BEAUTÉ & SOINS :\n💇 TINTURE : Préférer après 1er trimestre, produits sans ammoniaque\n🧴 CRÈMES : Éviter rétinol, acide salicylique. Hydratation quotidienne pour vergetures\n💅 ÉPILATION : Cire et laser déconseillés (douleur, sensibilité)\n💄 MAQUILLAGE : Pas de restriction majeure\n👩‍⚕️ CONSEIL : Privilégier produits bio/naturels, test cutané"
-      ]
-    },
-    {
-      "tag": "travail_gestes_grossesse",
-      "patterns": [
-        "position assise femme enceinte",
-        "porter charges grossesse",
-        "travail bureau grossesse",
-        "gestes quotidiens grossesse",
-        "ménage femme enceinte",
-        "position couchée grossesse",
-        "repos femme enceinte",
-        "travail physique grossesse"
-      ],
-      "responses": [
-        "GESTES QUOTIDIENS :\n💺 POSITION : Dos droit, repose-pieds, changer souvent de position\n📦 PORT DE CHARGES : Maximum 5kg, plier genoux (pas le dos)\n🧹 MÉNAGE : Éviter produits toxiques, demander aide si fatigue\n🛌 SOMMEIL : Côté gauche idéal, oreiller entre les jambes\n💼 TRAVAIL : Aménagement possible, signaler grossesse à l'employeur"
-      ]
-    },
+
     {
       "tag": "trimestre1_conseils",
       "patterns": [
@@ -159,8 +133,11 @@
       ],
       "responses": [
         "PREMIER TRIMESTRE (semaines 1-13) :\n✅ FAIRE : 1ère consultation avant 12 SA, prise d'acide folique, alimentation équilibrée, repos\n✅ EXAMENS : Prise de sang, 1ère échographie à 12 SA, dépistage trisomie 21\n❌ ÉVITER : Tabac, alcool, médicaments non prescrits, sports violents\n⚠️ SYMPTÔMES COURANTS : Nausées, fatigue, seins sensibles - normaux !"
-      ]
+      ],
+      "mots_cles": ["premier", "trimestre", "conseils", "début", "3 mois"],
+      "intention": "grossesse_generale"
     },
+
     {
       "tag": "trimestre2_conseils",
       "patterns": [
@@ -175,8 +152,11 @@
       ],
       "responses": [
         "DEUXIÈME TRIMESTRE (semaines 14-27) :\n✅ FAIRE : Échographie morphologique à 22 SA, déclaration de grossesse, préparation naissance, activité physique douce\n✅ PROFITER : Période souvent plus confortable, premiers mouvements de bébé !\n❌ ATTENTION : Surveiller prise de poids, diabète gestationnel dépistage\n💡 CONSEIL : Commencer à penser à la valise maternité et à la chambre bébé"
-      ]
+      ],
+      "mots_cles": ["deuxième", "trimestre", "milieu", "conseils", "morphologique"],
+      "intention": "grossesse_generale"
     },
+
     {
       "tag": "trimestre3_conseils",
       "patterns": [
@@ -191,7 +171,498 @@
       ],
       "responses": [
         "TROISIÈME TRIMESTRE (semaines 28-40) :\n✅ FAIRE : Préparation à l'accouchement, valise maternité prête, repos, surveillance mouvements bébé\n✅ EXAMENS : 3ème échographie à 32 SA, monitoring si nécessaire\n❌ ÉVITER : Longs trajets, ports de charges lourdes, stress\n🚨 URGENCES : Contractions régulières, perte des eaux, saignements → Maternité !"
-      ]
+      ],
+      "mots_cles": ["troisième", "trimestre", "fin", "préparation", "accouchement"],
+      "intention": "grossesse_generale"
+    },
+    
+    {
+      "tag": "consultations_prenatales",
+      "patterns": [
+        "combien consultations prénatales",
+        "suivi grossesse",
+        "visites médicales grossesse",
+        "calendrier consultations",
+        "rendez-vous grossesse",
+        "combien fois voir médecin"
+      ],
+      "responses": [
+        "📋 **CONSULTATIONS PRÉNATALES :**\n\n**Calendrier OMS (minimum 8 consultations) :**\n• Avant 12 semaines : 1ère consultation\n• 20 semaines\n• 26 semaines\n• 30 semaines\n• 34 semaines\n• 36 semaines\n• 38 semaines\n• 40 semaines\n\n**🌍 En Afrique (minimum acceptable) :**\nAu moins **4 consultations** :\n1. 16 semaines\n2. 24-28 semaines\n3. 32 semaines\n4. 36-38 semaines\n\n**📝 À CHAQUE VISITE :**\n• Poids, tension artérielle\n• Analyse d'urine\n• Hauteur utérine\n• Écoute cœur bébé\n• Questions et conseils"
+      ],
+      "mots_cles": ["consultations", "prénatales", "visites", "suivi", "combien"],
+      "intention": "soins_prenatals"
+    },
+    
+    {
+      "tag": "echographies",
+      "patterns": [
+        "combien échographies grossesse",
+        "quand faire échographie",
+        "échographie 12 semaines",
+        "échographie morphologique",
+        "échographie 22 semaines",
+        "3 échographies"
+      ],
+      "responses": [
+        "🔍 **ÉCHOGRAPHIES DE GROSSESSE :**\n\n**Minimum OMS : 1 échographie avant 24 semaines**\n\n**Idéal : 3 échographies**\n\n1️⃣ **12 SEMAINES (Datation) :**\n• Confirme date accouchement\n• Vérifie nombre de bébés\n• Clarté nucale (Trisomie 21)\n• Vitalité fœtus\n\n2️⃣ **22 SEMAINES (Morphologique) - LA PLUS IMPORTANTE :**\n• Examen détaillé tous les organes\n• Dépistage malformations\n• Croissance bébé\n• Position placenta\n• Sexe du bébé (si vous voulez savoir)\n\n3️⃣ **32 SEMAINES (Croissance) :**\n• Vérification croissance\n• Position bébé\n• Quantité liquide amniotique\n• Placenta\n\n💡 Échographies supplémentaires si nécessaire (grossesse à risque)"
+      ],
+      "mots_cles": ["échographie", "écho", "12", "22", "32", "semaines"],
+      "intention": "soins_prenatals"
+    },
+    
+    {
+      "tag": "examens_sanguins",
+      "patterns": [
+        "prises sang grossesse",
+        "analyses sanguines",
+        "examens sanguins",
+        "tests sang enceinte",
+        "quels examens grossesse"
+      ],
+      "responses": [
+        "💉 **EXAMENS SANGUINS DE GROSSESSE :**\n\n**1ÈRE CONSULTATION :**\n• Groupe sanguin + Rhésus\n• Numération formule sanguine (NFS)\n• Glycémie à jeun\n• Sérologies : Toxoplasmose, Rubéole, Hépatite B, VIH, Syphilis\n• RAI (Recherche Agglutinines Irrégulières)\n\n**24-28 SEMAINES :**\n• Test diabète gestationnel (O'Sullivan ou HGPO)\n\n**SUIVI SI NÉCESSAIRE :**\n• Toxoplasmose mensuelle (si non immunisée)\n• RAI pour Rhésus négatif\n• NFS si anémie\n\n**🩸 IMPORTANT :**\nCes examens détectent problèmes et protègent bébé"
+      ],
+      "mots_cles": ["examens", "sanguins", "prises", "sang", "analyses", "tests"],
+      "intention": "soins_prenatals"
+    },
+    
+    {
+      "tag": "alimentation_grossesse",
+      "patterns": [
+        "que manger enceinte",
+        "alimentation grossesse",
+        "nourriture femme enceinte",
+        "régime grossesse",
+        "conseils nutrition"
+      ],
+      "responses": [
+        "🥗 **ALIMENTATION PENDANT LA GROSSESSE :**\n\n**✅ RECOMMANDÉ :**\n• 5 fruits/légumes par jour (bien lavés)\n• Protéines : viande BIEN CUITE, poisson, œufs, légumineuses\n• Féculents : pain, riz, pâtes, céréales\n• 3 produits laitiers/jour (calcium)\n• Eau : 1,5-2 litres/jour\n• Fer : viande rouge, légumes verts, lentilles\n\n**❌ INTERDITS :**\n• Alcool (ZÉRO goutte)\n• Tabac\n• Viandes/poissons crus (sushi, carpaccio, tartare)\n• Fromages lait cru (Brie, Camembert...)\n• Charcuterie non cuite\n• Foie (excès vitamine A)\n• Œufs crus (mousse, mayonnaise maison)\n\n**⚠️ LIMITER :**\n• Caféine (<200mg/jour = 2 cafés)\n• Thon, espadon (mercure)\n• Sucres rapides"
+      ],
+      "mots_cles": ["manger", "alimentation", "nourriture", "régime", "nutrition"],
+      "intention": "nutrition_grossesse"
+    },
+    
+    {
+      "tag": "aliments_interdits",
+      "patterns": [
+        "aliments éviter grossesse",
+        "interdits enceinte",
+        "dangers alimentation",
+        "fromage interdit",
+        "sushi enceinte",
+        "alcool grossesse"
+      ],
+      "responses": [
+        "🚫 **ALIMENTS STRICTEMENT INTERDITS :**\n\n**ZÉRO TOLÉRANCE :**\n• ❌ Alcool (même une goutte)\n• ❌ Tabac et drogues\n\n**RISQUE TOXOPLASMOSE :**\n• Viandes/poissons crus ou peu cuits\n• Charcuterie non cuite\n• Légumes mal lavés\n• Litière de chat\n\n**RISQUE LISTÉRIOSE :**\n• Fromages au lait cru (pâte molle)\n• Croûtes de fromage\n• Produits fumés\n• Coquillages crus\n• Surimi, tarama\n\n**AUTRES DANGERS :**\n• Foie (trop vitamine A)\n• Grandes quantités de thon (mercure)\n• Compléments sans avis médical\n\n💡 **EN PRATIQUE :** Bien cuire viandes/poissons, laver fruits/légumes, fromages pasteurisés uniquement"
+      ],
+      "mots_cles": ["interdits", "éviter", "dangers", "aliments", "fromage", "alcool"],
+      "intention": "nutrition_grossesse"
+    },
+    
+    {
+      "tag": "acide_folique",
+      "patterns": [
+        "acide folique",
+        "vitamine B9",
+        "folates grossesse",
+        "pourquoi acide folique",
+        "dose acide folique"
+      ],
+      "responses": [
+        "💊 **ACIDE FOLIQUE (Vitamine B9) :**\n\n**POURQUOI ?**\nPrévient malformations tube neural (spina bifida, anencéphalie)\n\n**DOSE RECOMMANDÉE :**\n400-800 μg (microgrammes) par jour\n\n**QUAND ?**\n• Idéalement : AVANT conception (1-3 mois avant)\n• Continuer jusqu'à 12 semaines de grossesse\n\n**OÙ LE TROUVER ?**\n\n🥬 **Aliments riches :**\n• Légumes verts (épinards, brocoli)\n• Légumineuses (lentilles, pois chiches)\n• Agrumes\n• Œufs\n\n**⚠️ IMPORTANT :**\nLes suppléments sont RECOMMANDÉS car difficile d'avoir assez par l'alimentation seule"
+      ],
+      "mots_cles": ["acide", "folique", "B9", "folates", "vitamine"],
+      "intention": "nutrition_grossesse"
+    },
+
+    {
+      "tag": "prise_poids_grossesse",
+      "patterns": [
+        "combien kilos grossesse normale",
+        "prise poids idéale grossesse",
+        "trop grossir grossesse risques",
+        "maigrir grossesse danger",
+        "IMC grossesse poids",
+        "répartition poids grossesse",
+        "contrôler poids grossesse",
+        "prise poids trimestre grossesse"
+      ],
+      "responses": [
+        "⚖️ **PRISE DE POIDS PENDANT LA GROSSESSE :**\n\n**📊 RECOMMANDATIONS :**\n• IMC normal : 11-16 kg total\n• IMC <18.5 (maigre) : 12-18 kg\n• IMC >25 (surpoids) : 7-11 kg\n• IMC >30 (obésité) : 5-9 kg\n\n**📈 RÉPARTITION :**\n• 1er trimestre : 1-2 kg\n• 2ème trimestre : 1,5-2 kg/mois\n• 3ème trimestre : 1,5-2 kg/mois\n\n**👶 COMPOSITION :**\n• Bébé : 3-4 kg\n• Placenta : 0,5-1 kg\n• Liquide amniotique : 1 kg\n• Utérus : 1 kg\n• Seins : 0,5-1 kg\n• Réserves graisse : 2-3 kg\n• Sang : 1,5-2 kg\n\n**⚠️ RISQUES :**\nTrop ou pas assez peut avoir des conséquences. Suivi régulier avec sage-femme/médecin essentiel !"
+      ],
+      "mots_cles": ["poids", "kilos", "prise", "IMC", "grossir", "maigrir"],
+      "intention": "nutrition_grossesse"
+    },
+
+    {
+      "tag": "activite_physique_grossesse",
+      "patterns": [
+        "sport autorisé femme enceinte",
+        "quels sports grossesse",
+        "marche grossesse bénéfices",
+        "yoga femme enceinte",
+        "natation grossesse",
+        "sports interdits grossesse",
+        "activité physique trimestre",
+        "fatigue et sport grossesse"
+      ],
+      "responses": [
+        "🏃‍♀️ **ACTIVITÉ PHYSIQUE PENDANT LA GROSSESSE :**\n\n**✅ AUTORISÉS :**\n• Marche (30 min/jour idéal)\n• Natation/aquagym (excellent)\n• Yoga prénatal\n• Pilates adapté\n• Gymnastique douce\n• Vélo d'appartement\n\n**❌ INTERDITS/DÉCONSEILLÉS :**\n• Sports de combat\n• Sports à risque de chute (équitation, ski)\n• Plongée sous-marine\n• Sports intensifs de compétition\n• Abdos traditionnels\n\n**💡 CONSEILS :**\n• 30 min d'activité modérée/jour\n• Écouter sa fatigue\n• S'arrêter si essoufflement ou douleurs\n• Bien s'hydrater\n\n**📅 PAR TRIMESTRE :**\n• 1er trimestre : Modération si fatigue/nausées\n• 2ème trimestre : Période idéale\n• 3ème trimestre : Adapter à son confort"
+      ],
+      "mots_cles": ["sport", "activité", "physique", "marche", "yoga", "natation"],
+      "intention": "grossesse_generale"
+    },
+
+    {
+      "tag": "voyage_grossesse",
+      "patterns": [
+        "voyager enceinte autorisé",
+        "avion femme enceinte jusqu'à quand",
+        "voiture grossesse précautions",
+        "vacances femme enceinte",
+        "voyage dernier trimestre",
+        "assurance voyage grossesse",
+        "destinations déconseillées femme enceinte"
+      ],
+      "responses": [
+        "✈️ **VOYAGES PENDANT LA GROSSESSE :**\n\n**AVION :**\n• Généralement autorisé jusqu'à 36 SA\n• Certificat médical souvent requis après 28 SA\n• Compagnie aérienne à vérifier\n• Se lever régulièrement, boire beaucoup\n\n**VOITURE :**\n• Pauses toutes les 2 heures\n• Ceinture sous le ventre\n• Position confortable\n\n**🌍 DESTINATIONS :**\n• Éviter zones tropicales (paludisme)\n• Éviter haute altitude\n• Privilégier destinations avec bon système de santé\n\n**📄 DOCUMENTS :**\n• Certificat médical\n• Carte groupe sanguin\n• Carnet de santé\n• Assurance voyage couvrant grossesse\n\n**⚠️ DERNIER TRIMESTRE :**\nVoyages proches recommandés, éviter longs trajets"
+      ],
+      "mots_cles": ["voyage", "avion", "voiture", "vacances", "déplacement"],
+      "intention": "grossesse_generale"
+    },
+    
+    {
+      "tag": "vie_intime_grossesse",
+      "patterns": [
+        "rapports sexuels grossesse sécurité",
+        "positions sexuelles femme enceinte",
+        "désir sexuel grossesse",
+        "orgasme déclenche accouchement",
+        "saignements après rapports grossesse",
+        "trimestre rapports intimes",
+        "contractions après rapports",
+        "libido grossesse variations"
+      ],
+      "responses": [
+        "❤️ **VIE INTIME PENDANT LA GROSSESSE :**\n\n**SÉCURITÉ :**\n• Généralement sans danger sauf contre-indication médicale\n• Bébé bien protégé par liquide amniotique\n\n**🛏️ POSITIONS CONFORTABLES :**\n• Côté à côté\n• Femme dessus\n• Derrière\n• Éviter positions compressant le ventre\n\n**📈 LIBIDO :**\n• Variable selon les femmes et trimestres\n• Souvent ↑ 2ème trimestre (meilleure forme)\n• Souvent ↓ 1er et 3ème trimestres (fatigue, inconfort)\n\n**⚠️ ORGASME :**\n• Ne déclenche PAS accouchement (sauf terme dépassé)\n• Peut provoquer contractions temporaires normales\n\n**🚨 CONSULTER SI :**\n• Saignements\n• Douleurs\n• Pertes inhabituelles\n• Contractions régulières"
+      ],
+      "mots_cles": ["rapports", "sexuels", "sexe", "intime", "libido", "orgasme"],
+      "intention": "grossesse_generale"
+    },
+
+    {
+      "tag": "emotions_grossesse",
+      "patterns": [
+        "baby blues grossesse",
+        "émotions femme enceinte",
+        "pleurs grossesse normaux",
+        "stress grossesse effets bébé",
+        "anxiété grossesse",
+        "sautes humeur grossesse",
+        "dépression grossesse",
+        "bien-être mental grossesse"
+      ],
+      "responses": [
+        "😊 **ÉMOTIONS PENDANT LA GROSSESSE :**\n\n**NORMAL :**\n• Sautes d'humeur (hormones)\n• Sensibilité accrue\n• Pleurs sans raison\n• Anxiété légère\n• Rêves étranges\n\n**💙 BABY BLUES :**\n• Fréquent après accouchement (50-80%)\n• Apparaît vers jour 3-10\n• Dure 1-2 semaines\n• Dû aux changements hormonaux\n\n**⚠️ DÉPRESSION :**\n• Si tristesse persistante >2 semaines\n• Perte d'intérêt\n• Idées noires\n• Besoin de consulter !\n\n**🧘 CONSEILS :**\n• Parler de ses émotions\n• Repos suffisant\n• Relaxation, yoga\n• Groupes de parole\n• Accepter l'aide\n\n**👩‍⚕️ AIDE :**\nSage-femme, psychologue périnatal, soutien proches"
+      ],
+      "mots_cles": ["émotions", "baby blues", "stress", "anxiété", "humeur", "dépression"],
+      "intention": "sante_mentale"
+    },
+    
+    {
+      "tag": "valise_maternite",
+      "patterns": [
+        "quoi mettre valise maternité",
+        "valise accouchement quand préparer",
+        "liste affaires maternité",
+        "valise bébé maternité",
+        "valise papa accouchement",
+        "documents maternité",
+        "quand préparer valise grossesse",
+        "checklist valise maternité"
+      ],
+      "responses": [
+        "🎒 **VALISE MATERNITÉ :**\n\n**⏰ QUAND PRÉPARER :**\nÀ partir de 8 mois (32 semaines)\n\n**👩 POUR MAMAN :**\n• 2-3 nuits de vêtements confortables\n• Produits toilette\n• Soutiens-gorge allaitement\n• Affaires retour (vêtement ample)\n• Coussin d'allaitement\n• Trousse de toilette\n\n**👶 POUR BÉBÉ :**\n• Bodies, pyjamas (3-4 de chaque)\n• Couches nouveau-né\n• Brassières\n• Chaussettes, bonnet\n• Couvertures\n• Lait de toilette\n\n**📄 DOCUMENTS :**\n• Carte vitale\n• Pièce d'identité\n• Carte groupe sanguin\n• Dossier médical\n• Carnet de santé\n\n**💡 CONSEIL :**\nUne valise à la maison, une au coffre voiture !"
+      ],
+      "mots_cles": ["valise", "maternité", "accouchement", "liste", "documents", "préparer"],
+      "intention": "preparation_accouchement"
+    },
+
+    {
+      "tag": "chambre_bebe_preparation",
+      "patterns": [
+        "quand préparer chambre bébé",
+        "liste naissance essentiel",
+        "lit bébé sécurité normes",
+        "matériel puériculture indispensable",
+        "chambre bébé aménagement",
+        "couffin ou lit cododo",
+        "table à langer nécessaire",
+        "poussette choisir"
+      ],
+      "responses": [
+        "🏠 **PRÉPARATION CHAMBRE BÉBÉ :**\n\n**⏰ QUAND :**\nCommencer vers 7 mois (28 semaines)\n\n**🛏️ LIT SÉCURITÉ :**\n• Normes NF\n• Barreaux <6.5cm d'écart\n• Matelas ferme et ajusté\n• Pas d'oreiller/couverture avant 1 an\n• Température 18-20°C\n\n**🚼 INDISPENSABLE :**\n• Couches (taille 1)\n• Bodies, pyjamas\n• Produits toilette bébé\n• Thermomètre\n• Biberons si besoin\n• Sérum physiologique\n\n**👶 MATÉRIEL :**\n• Poussette (naissance ou combiné)\n• Siège auto groupe 0+\n• Table à langer (optionnelle)\n• Baignoire bébé\n• Parc ou tapis d'éveil\n\n**💡 CONSEILS :**\n• Liste de naissance pour éviter doublons\n• Privilégier occasion pour certains articles\n• Sécurité avant tout !"
+      ],
+      "mots_cles": ["chambre", "bébé", "préparer", "lit", "puériculture", "liste naissance"],
+      "intention": "preparation_accouchement"
+    },
+    
+    {
+      "tag": "calendrier_vaccinal_complet",
+      "patterns": [
+        "calendrier vaccinal bébé",
+        "programme vaccination",
+        "vaccins obligatoires",
+        "quand vacciner bébé",
+        "liste vaccins enfant",
+        "vaccinations nourrisson"
+      ],
+      "responses": [
+        "💉 **CALENDRIER VACCINAL COMPLET :**\n\n**🍼 NAISSANCE :**\n• BCG (tuberculose)\n• Hépatite B (1ère dose)\n• Polio 0 (VPO)\n\n**👶 6 SEMAINES (1,5 mois) :**\n• Pentavalent 1 (DTCoq-HepB-Hib)\n• VPO 1\n• Pneumocoque 1\n• Rotavirus 1\n\n**👶 10 SEMAINES (2,5 mois) :**\n• Pentavalent 2\n• VPO 2\n• Pneumocoque 2\n• Rotavirus 2\n\n**👶 14 SEMAINES (3,5 mois) :**\n• Pentavalent 3\n• VPO 3\n• Pneumocoque 3\n• VPI (Polio injectable)\n\n**👦 9 MOIS :**\n• Rougeole-Rubéole\n• Fièvre jaune\n\n**👦 15 MOIS :**\n• Rougeole-Rubéole (rappel)\n\n✅ GRATUIT dans centres de santé publics"
+      ],
+      "mots_cles": ["calendrier", "vaccinal", "vaccin", "programme", "bébé"],
+      "intention": "vaccination"
+    },
+    
+    {
+      "tag": "vaccin_pentavalent",
+      "patterns": [
+        "pentavalent",
+        "vaccin 5 en 1",
+        "DTC HepB Hib",
+        "qu'est-ce pentavalent",
+        "5 maladies vaccin"
+      ],
+      "responses": [
+        "💉 **VACCIN PENTAVALENT (5 en 1) :**\n\n**PROTECTION CONTRE 5 MALADIES :**\n1. **Diphtérie** : infection gorge grave\n2. **Tétanos** : contractures musculaires mortelles\n3. **Coqueluche** : toux violente, dangereuse <6 mois\n4. **Hépatite B** : maladie du foie\n5. **Haemophilus influenzae b** : méningite, pneumonie\n\n**CALENDRIER :**\n• 1ère dose : 6 semaines\n• 2ème dose : 10 semaines\n• 3ème dose : 14 semaines\n\n**EFFETS SECONDAIRES :**\n• Fièvre légère\n• Douleur/rougeur au point d'injection\n• Irritabilité 1-2 jours\n→ Paracétamol si nécessaire\n\n✅ Vaccin SÛR et GRATUIT"
+      ],
+      "mots_cles": ["pentavalent", "5 en 1", "DTC", "diphtérie", "tétanos"],
+      "intention": "vaccination"
+    },
+    
+    {
+      "tag": "retard_vaccination",
+      "patterns": [
+        "raté vaccin",
+        "retard vaccination",
+        "oublié vaccin",
+        "rattraper vaccins",
+        "vaccin en retard"
+      ],
+      "responses": [
+        "⏰ **RETARD DE VACCINATION :**\n\n**PAS DE PANIQUE ! 😊**\n\n✅ **CE QU'IL FAUT SAVOIR :**\n• Il n'est JAMAIS trop tard pour vacciner\n• On ne recommence PAS tout à zéro\n• On reprend là où on s'est arrêté\n\n**🏥 QUE FAIRE ?**\n1. Allez au centre de santé dès que possible\n2. Apportez le carnet de vaccination\n3. L'agent de santé vous dira quels vaccins faire\n4. On rattrape les doses manquées\n\n**💡 CONSEIL :**\n• Notez les dates dans votre téléphone\n• Demandez rappels au centre de santé\n• Gardez le carnet de santé en sécurité\n\n🎯 L'important : RATTRAPER maintenant !"
+      ],
+      "mots_cles": ["raté", "retard", "oublié", "rattraper", "manqué"],
+      "intention": "vaccination"
+    },
+    
+    {
+      "tag": "effets_secondaires_vaccins",
+      "patterns": [
+        "effets secondaires vaccins",
+        "réactions vaccins",
+        "fièvre après vaccin",
+        "vaccin douleur",
+        "dangers vaccins"
+      ],
+      "responses": [
+        "🌡️ **EFFETS SECONDAIRES DES VACCINS :**\n\n**COURANTS ET BÉNINS (très fréquents) :**\n• Légère fièvre (<38,5°C)\n• Douleur/rougeur au point d'injection\n• Irritabilité, pleurs\n• Perte d'appétit temporaire\n• Fatigue\n→ Durent 1-2 jours\n\n**QUE FAIRE ?**\n• Paracétamol selon poids\n• Compresse fraîche sur point d'injection\n• Hydratation\n• Câlins et réconfort\n\n**⚠️ CONSULTER SI :**\n• Fièvre >39°C persistante\n• Convulsions\n• Gonflement important\n• Réaction allergique (rare)\n\n**💡 IMPORTANT :**\nLes effets graves sont TRÈS RARES. Les bénéfices des vaccins dépassent LARGEMENT les risques !"
+      ],
+      "mots_cles": ["effets", "secondaires", "réactions", "fièvre", "douleur"],
+      "intention": "vaccination"
+    },
+    
+    {
+      "tag": "symptomes_urgence_grossesse",
+      "patterns": [
+        "signes danger grossesse",
+        "urgence enceinte",
+        "quand consulter urgence",
+        "symptômes graves",
+        "danger femme enceinte"
+      ],
+      "responses": [
+        "🚨 **URGENCES GROSSESSE - CONSULTER IMMÉDIATEMENT :**\n\n**APPELEZ 15 OU ALLEZ AUX URGENCES SI :**\n\n🩸 **SAIGNEMENTS :**\n• Sang rouge abondant\n• Caillots\n• Persistants\n\n💧 **LIQUIDE QUI COULE :**\n• Perte des eaux (rupture poche)\n• Liquide clair abondant\n\n🤕 **DOULEURS :**\n• Abdominales violentes\n• Maux de tête sévères + vision floue\n• Contractions régulières avant 37 semaines\n\n👶 **BÉBÉ :**\n• Absence mouvements >12h (après 28 sem)\n• Diminution brutale mouvements\n\n🌡️ **AUTRES :**\n• Fièvre >38,5°C\n• Gonflement soudain visage/mains\n• Vomissements persistants\n\n⚠️ **NE PRENEZ AUCUN RISQUE !**\nMieux vaut une fausse alerte qu'un danger ignoré"
+      ],
+      "mots_cles": ["urgence", "danger", "signes", "alerte", "consulter"],
+      "intention": "symptomes_alerte"
+    },
+    
+    {
+      "tag": "saignements_grossesse",
+      "patterns": [
+        "saignements grossesse",
+        "sang enceinte",
+        "pertes sang",
+        "saigner enceinte",
+        "hémorragie grossesse"
+      ],
+      "responses": [
+        "🩸 **SAIGNEMENTS PENDANT LA GROSSESSE :**\n\n**TOUT SAIGNEMENT NÉCESSITE CONSULTATION !**\n\n**1ER TRIMESTRE :**\n• Spotting léger : peut être normal (nidation)\n• Saignements abondants : risque fausse couche\n\n**2ÈME/3ÈME TRIMESTRE :**\n• Toujours anormal\n• Causes possibles : placenta prævia, décollement placentaire\n• URGENCE\n\n**🚨 QUE FAIRE ?**\n1. Allongez-vous\n2. Ne mettez RIEN dans le vagin\n3. Notez quantité (léger/modéré/abondant)\n4. Allez aux URGENCES ou appelez 15\n5. Même petits saignements → signaler à médecin\n\n**NE PAS PANIQUER mais NE PAS IGNORER**"
+      ],
+      "mots_cles": ["saignement", "sang", "pertes", "hémorragie", "rouge"],
+      "intention": "symptomes_alerte"
+    },
+    
+    {
+      "tag": "mouvements_bebe",
+      "patterns": [
+        "bébé ne bouge pas",
+        "mouvements bébé",
+        "compter mouvements",
+        "bébé bouge moins",
+        "sentir bébé bouger"
+      ],
+      "responses": [
+        "👶 **MOUVEMENTS DU BÉBÉ :**\n\n**CHRONOLOGIE :**\n• 18-20 semaines : Premiers mouvements ressentis\n• 24 semaines : Mouvements réguliers\n• 28 semaines : Mouvements bien établis\n• 32-36 semaines : Pic d'activité\n• 37-40 semaines : Moins de place, mais bébé DOIT bouger\n\n**COMPTAGE (après 28 semaines) :**\nAu moins **10 mouvements en 2 heures** (quand vous vous concentrez)\n\n**SI MOINS DE MOUVEMENTS :**\n1. Allongez-vous côté gauche\n2. Mangez/buvez sucré\n3. Attendez 1 heure\n4. Recomptez\n5. Si toujours peu/pas de mouvements → **URGENCES IMMÉDIATEMENT**\n\n**⚠️ IMPORTANT :**\n\"Bébé dort\" n'est PAS une raison valable si absence totale >12h !"
+      ],
+      "mots_cles": ["mouvements", "bébé", "bouge", "bouger", "sentir"],
+      "intention": "symptomes_alerte"
+    },
+    
+    {
+      "tag": "pre_eclampsie",
+      "patterns": [
+        "pré-éclampsie",
+        "éclampsie",
+        "hypertension grossesse",
+        "toxémie gravidique",
+        "tension élevée enceinte"
+      ],
+      "responses": [
+        "⚠️ **PRÉ-ÉCLAMPSIE (Toxémie gravidique) :**\n\n**DÉFINITION :**\nComplication grave : hypertension + protéines dans urines après 20 semaines\n\n**🚨 SIGNES D'ALERTE :**\n• Maux de tête violents persistants\n• Vision floue, mouches volantes, flashs\n• Douleur aiguë sous les côtes (foie)\n• Gonflement soudain visage/mains/pieds\n• Nausées/vomissements tardifs\n• Prise de poids rapide (>1kg/semaine)\n\n**DANGERS :**\n• Pour maman : convulsions (éclampsie), AVC, insuffisance rénale\n• Pour bébé : retard croissance, souffrance fœtale\n\n**TRAITEMENT :**\n• Hospitalisation\n• Surveillance étroite\n• Médicaments anti-hypertenseurs\n• Parfois : accouchement anticipé\n\n**💡 PRÉVENTION :**\nConsultations régulières = dépistage précoce"
+      ],
+      "mots_cles": ["pré-éclampsie", "éclampsie", "hypertension", "toxémie", "tension"],
+      "intention": "symptomes_alerte"
+    },
+    
+    {
+      "tag": "signes_accouchement",
+      "patterns": [
+        "signes travail",
+        "début accouchement",
+        "contractions accouchement",
+        "quand partir maternité",
+        "perte eaux",
+        "bouchon muqueux"
+      ],
+      "responses": [
+        "👶 **SIGNES QUE L'ACCOUCHEMENT APPROCHE :**\n\n**🚨 PARTIR MATERNITÉ MAINTENANT :**\n• **Contractions régulières** : toutes les 5 min pendant 1h (1ère grossesse) ou 10 min (autres)\n• **Perte des eaux** : liquide clair qui coule abondamment\n• **Saignements** rouges abondants\n• **Douleur** intense constante\n\n**⏰ SIGNES PRÉCURSEURS (jours avant) :**\n• Bouchon muqueux : glaire rosée/marron\n• Contractions irrégulières (Braxton Hicks)\n• Bébé descend : respiration plus facile\n• Diarrhée\n• Énergie soudaine (envie tout nettoyer)\n\n**💡 CONSEIL :**\n• 1ère grossesse : partez quand contractions 5 min\n• Autres grossesses : partez plus tôt (travail plus rapide)\n• En cas de doute : appelez la maternité\n\n**📞 NUMÉRO MATERNITÉ à avoir toujours !**"
+      ],
+      "mots_cles": ["accouchement", "travail", "contractions", "maternité", "partir"],
+      "intention": "symptomes_alerte"
+    },
+
+    {
+      "tag": "soins_nouveau_ne",
+      "patterns": [
+        "comment donner bain nouveau-né",
+        "soins cordon ombilical",
+        "change couche fréquence",
+        "érythème fessier traitement",
+        "température bain bébé",
+        "produits toilette bébé",
+        "nettoyer yeux bébé",
+        "couper ongles bébé"
+      ],
+      "responses": [
+        "👶 **SOINS DU NOUVEAU-NÉ :**\n\n**🛁 BAIN :**\n• Température eau : 37°C\n• Durée : 5-10 minutes\n• Fréquence : 2-3 fois/semaine\n• Produits pH neutre spécifiques bébé\n\n**🧴 CORDON OMBILICAL :**\n• Nettoyer à l'éther 2-3 fois/jour\n• Maintenir au sec\n• Tombe seul en 5-15 jours\n• Consulter si rougeur, odeur, écoulement\n\n**💩 CHANGES :**\n• Fréquence : 6-8 changes/jour\n• Nettoyer des parties propres vers sales\n• Crème barrière pour prévenir érythème\n\n**👀 HYGIÈNE :**\n• Yeux : sérum physiologique coton propre\n• Nez : sérum physiologique\n• Ongles : couper quand longs, après bain\n\n**🚨 ÉRYTHÈME FESSIER :**\n• Change immédiat après selles\n• Crème barrière (zinc)\n• Consulter si persiste ou s'aggrave"
+      ],
+      "mots_cles": ["bain", "cordon", "change", "érythème", "fessier", "hygiène"],
+      "intention": "soins_bebe"
+    },
+
+    {
+      "tag": "sommeil_bebe_details",
+      "patterns": [
+        "combien heures bébé dort",
+        "position sommeil bébé sécuritaire",
+        "lit bébé sécurité",
+        "bébé se réveille nuit",
+        "rituel coucher bébé",
+        "sieste bébé durée",
+        "réveils nocturnes normaux",
+        "dodo cododo sécurité"
+      ],
+      "responses": [
+        "😴 **SOMMEIL DU BÉBÉ :**\n\n**⏰ DURÉE :**\n• Nouveau-né : 16-18 heures/jour\n• 3 mois : 15 heures/jour\n• 6 mois : 14-15 heures/jour\n• 1 an : 13-14 heures/jour\n\n**🛌 SÉCURITÉ :**\n• Position : DOS uniquement\n• Lit : matelas ferme, sans oreiller/couverture\n• Température : 18-20°C\n• Pas de tour de lit épais\n• Pas de cododo accidentel\n\n**🌙 RÉVEILS NOCTURNES :**\n• Normaux jusqu'à 6 mois\n• Liés aux cycles de sommeil\n• Besoins alimentaires\n\n**📝 RITUEL DU COUCHER :**\n• Heure fixe\n• Calme et détente\n• Bain, massage, histoire\n• Environnement paisible\n\n**💡 CONSEILS :**\n• Différencier jour/nuit\n• Apprendre à s'endormir seul\n• Patience et constance"
+      ],
+      "mots_cles": ["sommeil", "dort", "nuit", "coucher", "sieste", "réveils"],
+      "intention": "soins_bebe"
+    },
+
+    {
+      "tag": "alimentation_bebe_details",
+      "patterns": [
+        "quantité lait bébé",
+        "allaitement fréquence",
+        "biberon préparation",
+        "quand diversification alimentaire",
+        "premières purées bébé",
+        "refus biberon que faire",
+        "régurgitations bébé",
+        "intolérance lactose bébé"
+      ],
+      "responses": [
+        "🍼 **ALIMENTATION DU BÉBÉ :**\n\n**🤱 ALLAITEMENT :**\n• À la demande : 8-12 fois/24h\n• Durée : 10-45 minutes par sein\n• Signes suffisamment de lait : 6-8 couches mouillées/jour\n\n**🍶 BIBERON :**\n• Quantité : 150ml/kg/jour\n• Préparation : eau à 70°C, dosage précis\n• Stérilisation jusqu'à 4 mois\n\n**🥕 DIVERSIFICATION :**\n• À partir de 4-6 mois\n• Commencer par légumes (carotte, courgette)\n• Puis fruits (pomme, poire)\n• Un aliment à la fois\n\n**⚠️ PROBLÈMES :**\n• Refus : patience, ne pas forcer\n• Régurgitations : normales si bébé va bien\n• Consulter si : perte poids, pleurs, refus alimentaire\n\n**💡 CONSEILS :**\n• Jamais de miel avant 1 an\n• Introduire gluten progressivement\n• Surveillance allergies"
+      ],
+      "mots_cles": ["lait", "allaitement", "biberon", "diversification", "purées", "régurgitations"],
+      "intention": "alimentation_bebe"
+    },
+
+    {
+      "tag": "development_moteur",
+      "patterns": [
+        "quand bébé tient tête",
+        "bébé se retourne quel âge",
+        "premiers pas bébé",
+        "bébé rampe quand",
+        "premiers mots bébé",
+        "développement langage bébé",
+        "jeux éveil bébé",
+        "retard développement que faire"
+      ],
+      "responses": [
+        "👶 **DÉVELOPPEMENT DU BÉBÉ :**\n\n**🏃‍♂️ MOTRICITÉ :**\n• Tient tête : 3 mois\n• Se retourne : 6 mois\n• Tient assis : 8 mois\n• Rampe : 9 mois\n• Marche : 12-18 mois\n\n**💬 LANGAGE :**\n• Gazouillis : 2-3 mois\n• Babillage : 6 mois\n• Premiers mots : 12 mois\n• Phrases simples : 2 ans\n\n**🧠 ÉVEIL :**\n• Sourit social : 2 mois\n• Saisit objets : 4 mois\n• Jeux simples : 9 mois\n• Imitation : 12 mois\n\n**🎯 STIMULATION :**\n• Parler beaucoup au bébé\n• Jeux adaptés à l'âge\n• Livres et comptines\n• Pas d'écran avant 3 ans\n\n**💡 IMPORTANT :**\nChaque enfant son rythme ! Consultez si inquiétude persistante."
+      ],
+      "mots_cles": ["développement", "tête", "retourne", "marche", "mots", "langage"],
+      "intention": "developpement_bebe"
+    },
+
+    {
+      "tag": "postpartum_suivi",
+      "patterns": [
+        "saignements après accouchement durée",
+        "retour couches quand",
+        "rééducation périnée",
+        "baby blues symptômes",
+        "dépression post-partum",
+        "perte poids après accouchement",
+        "reprise règles allaitement"
+      ],
+      "responses": [
+        "🔄 **SUIVI POST-PARTUM :**\n\n**🩸 SAIGNEMENTS :**\n• Lochies : 3-6 semaines\n• Rouge → rose → jaunâtre\n• Consulter si : abondants, odeur, fièvre\n\n**📅 RETOUR DE COUCHES :**\n• Sans allaitement : 6-8 semaines\n• Avec allaitement : variable, souvent plus tard\n• Premières règles peuvent être différentes\n\n**💪 RÉÉDUCATION :**\n• Périnée : ESSENTIELLE pour toutes\n• Commence vers 6-8 semaines\n• Abdominaux après rééducation périnée\n\n**😢 SANTÉ MENTALE :**\n• Baby blues : fréquent, temporaire\n• Dépression post-partum : nécessite aide\n• Consulter si : tristesse persistante, idées noires\n\n**⚖️ POIDS :**\n• Perte progressive\n• Allaitement aide\n• Alimentation équilibrée importante\n• Activité physique douce progressive"
+      ],
+      "mots_cles": ["postpartum", "saignements", "couches", "rééducation", "baby blues", "poids"],
+      "intention": "soins_postnatal"
+    },
+
+    {
+      "tag": "allaitement_problemes",
+      "patterns": [
+        "crevasses sein traitement",
+        "engorgement sein que faire",
+        "mastite symptômes",
+        "manque lait que faire",
+        "tire-lait utilisation",
+        "allaitement douloureux",
+        "sevrage allaitement comment"
+      ],
+      "responses": [
+        "🤱 **PROBLÈMES D'ALLAITEMENT :**\n\n**🩹 CREVASSES :**\n• Cause : mauvaise position\n• Traitement : corriger position, lait maternel sur mamelon, lanoline\n• Consulter si persiste\n\n**🔥 ENGORGEMENT :**\n• Symptômes : seins durs, douloureux\n• Traitement : tétées fréquentes, froid entre tétées, massage doux\n\n**🦠 MASTITE :**\n• Symptômes : sein rouge, douloureux, fièvre\n• URGENCE : consulter rapidement\n• Traitement : antibiotiques + vidange sein\n\n**💧 MANQUE DE LAIT :**\n• Rare (production = demande)\n• Solutions : tétées fréquentes, repos, hydratation\n• Consulter conseillère lactation\n\n**🌀 SEVRAGE :**\n• Progressif sur plusieurs semaines\n• Remplacer une tétée à la fois\n• Attention engorgement\n• Conserver moments câlins"
+      ],
+      "mots_cles": ["crevasses", "engorgement", "mastite", "manque lait", "tire-lait", "sevrage"],
+      "intention": "allaitement"
     }
   ]
 }

@@ -1,24 +1,43 @@
 from datetime import datetime
 from bson import ObjectId
+import hashlib
+import secrets
+from flask_login import UserMixin
 
-class User:
+class User(UserMixin):
     def __init__(self, user_data=None):
         if user_data is None:
             user_data = {}
         
         self._id = user_data.get('_id')
+        self.id = str(self._id) if self._id else None
         self.nom = user_data.get('nom', '')
         self.prenom = user_data.get('prenom', '')
         self.email = user_data.get('email', '')
         self.phone = user_data.get('phone', '')
-        self.date_naissance = user_data.get('date_naissance')
-        self.statut = user_data.get('statut', 'enceinte')  # enceinte, jeune_mere, les_deux
-        self.groupe_sanguin = user_data.get('groupe_sanguin', '')
+        self.password_hash = user_data.get('password_hash', '')
+        self.password_salt = user_data.get('password_salt', '')
+        self.statut = user_data.get('statut', 'enceinte')
         self.allergies = user_data.get('allergies', '')
         self.traitements = user_data.get('traitements', '')
         self.children = user_data.get('children', [])
         self.date_creation = user_data.get('date_creation', datetime.utcnow())
         self.date_modification = user_data.get('date_modification', datetime.utcnow())
+        self.role = user_data.get('role', 'user')
+        self.is_active = user_data.get('is_active', True)
+    
+    def set_password(self, password):
+        """Hash le mot de passe avec un salt (méthode SHA256 pour compatibilité)"""
+        self.password_salt = secrets.token_hex(16)
+        self.password_hash = self._hash_password(password, self.password_salt)
+    
+    def check_password(self, password):
+        """Vérifie le mot de passe"""
+        return self.password_hash == self._hash_password(password, self.password_salt)
+    
+    def _hash_password(self, password, salt):
+        """Hash le mot de passe avec le salt"""
+        return hashlib.sha256((password + salt).encode()).hexdigest()
     
     def to_dict(self):
         """Convertit l'objet en dictionnaire pour MongoDB"""
@@ -27,17 +46,18 @@ class User:
             'prenom': self.prenom,
             'email': self.email,
             'phone': self.phone,
-            'date_naissance': self.date_naissance,
+            'password_hash': self.password_hash,
+            'password_salt': self.password_salt,
             'statut': self.statut,
-            'groupe_sanguin': self.groupe_sanguin,
             'allergies': self.allergies,
             'traitements': self.traitements,
             'children': self.children,
+            'role': self.role,
+            'is_active': self.is_active,
             'date_creation': self.date_creation,
-            'date_modification': self.date_modification
+            'date_modification': datetime.utcnow()
         }
         
-        # N'inclure l'_id que s'il existe
         if self._id:
             data['_id'] = ObjectId(self._id) if isinstance(self._id, str) else self._id
         
@@ -48,21 +68,22 @@ class User:
         """Crée un objet User depuis un dictionnaire MongoDB"""
         return cls(data)
     
-    def calculate_age(self):
-        """Calcule l'âge à partir de la date de naissance"""
-        if not self.date_naissance:
-            return None
-        
-        if isinstance(self.date_naissance, str):
-            birth_date = datetime.fromisoformat(self.date_naissance.replace('Z', '+00:00'))
-        else:
-            birth_date = self.date_naissance
-            
-        today = datetime.utcnow()
-        age = today.year - birth_date.year
-        
-        # Ajuster si l'anniversaire n'est pas encore passé cette année
-        if (today.month, today.day) < (birth_date.month, birth_date.day):
-            age -= 1
-            
-        return age
+    def get_id(self):
+        """Retourne l'ID de l'utilisateur pour Flask-Login"""
+        return self.id
+    
+    def is_authenticated(self):
+        """Vérifie si l'utilisateur est authentifié"""
+        return True
+    
+    def is_active(self):
+        """Vérifie si le compte est actif"""
+        return self.is_active
+    
+    def is_anonymous(self):
+        """Vérifie si l'utilisateur est anonyme"""
+        return False
+    
+    def get_full_name(self):
+        """Retourne le nom complet de l'utilisateur"""
+        return f"{self.prenom} {self.nom}".strip()
