@@ -34,7 +34,7 @@ class HealthProcessor:
     def _load_model(self):
         """Charge le modèle spaCy si disponible"""
         try:
-            self.nlp = spacy.load("fr_core_news_md")
+            self.nlp = spacy.load("fr_core_news_sm")
             print("✅ Modèle spaCy chargé avec succès")
         except OSError:
             print("⚠️ Modèle spaCy non trouvé. Utilisation mode basique.")

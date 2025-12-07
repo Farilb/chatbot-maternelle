@@ -5,9 +5,9 @@
     "langue": "français",
     "format": "hybrid",
     "total_intents": 50,
-    "date_creation": "2024-11-14",
+    "date_creation": "2025-11-14",
     "sources": ["OMS/WHO", "UNICEF", "Forums médicaux", "Retours utilisateurs"],
-    "contexte": "Afrique de l'Ouest / Burkina Faso",
+    "contexte": "Burkina Faso",
     "disclaimer": "Informations à but éducatif uniquement. Consultez un professionnel de santé."
   },
   
